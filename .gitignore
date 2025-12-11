@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output
+dist/
+build/
+.cache/
+.next/
+.nuxt/
+out/
+coverage/
+
+# Env/config
+.env
+.env.*
+*.local
+
+# Package manager artifacts
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+*.tsbuildinfo
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
