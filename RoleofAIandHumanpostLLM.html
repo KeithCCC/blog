@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>AIが仕事をする時代、人間の仕事は「責任」を引き受けることへ | Keith CCC Blog</title>
+
+  <style>
+    :root {
+      --bg: #0f1115;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #4f8cff;
+      --line: rgba(255,255,255,.08);
+      --code-bg: #1a1d24;
+    }
+
+    html { color-scheme: dark; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.85;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      margin: 0 0 0.6em;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin: 2em 0 0.8em;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 1.6em 0 0.6em;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 1em 0;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul, ol {
+      margin: 1em 0;
+      padding-left: 1.5em;
+    }
+
+    li {
+      margin: 0.3em 0;
+    }
+
+    strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    blockquote {
+      margin: 1.5em 0;
+      padding: 0.8em 1.2em;
+      border-left: 3px solid var(--accent);
+      background: var(--code-bg);
+      color: var(--muted);
+    }
+
+    pre {
+      background: var(--code-bg);
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2em;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      color: var(--accent);
+    }
+
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .references {
+      margin-top: 3em;
+      padding-top: 2em;
+      border-top: 1px solid var(--line);
+    }
+
+    .references h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1em;
+    }
+
+    .references ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .references li {
+      margin: 1em 0;
+      padding-left: 0;
+    }
+
+    .references a {
+      word-break: break-all;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <a href="./index.html" class="back-link">← 一覧に戻る</a>
+
+    <h1>AIが仕事をする時代、人間の仕事は「責任」を引き受けることへ</h1>
+
+    <p><strong>今日の結論：AI時代の人間の仕事＝方向決め＋品質責任＋説明責任。</strong></p>
+
+    <h3>はじめに：AIが"手"を増やし、人間は"舵"を握る</h3>
+
+    <p>生成AIやAIエージェントによって、文章作成・調査・要約・コード生成・テスト支援まで、実務の自動化が一気に進んできました。
+    一方で最近は「人間の役割は"作業者"から"責任者（判断・監督・説明責任）"へ寄っていく」という論調が目立ちます。たとえば東洋経済では、AI時代に人間に残る価値として「<strong>経験知・決断・レビュー（＋フィジカル）</strong>」という整理が紹介されています。</p>
+
+    <hr style="border: 0; border-top: 1px solid var(--line); margin: 2em 0;">
+
+    <h2>1. AIによる自動化が進む（"できること"が増える）🤖</h2>
+
+    <p>AIは、作業単位で見ると「人間の代替」というより <strong>人間の増幅</strong> になってきました。</p>
+
+    <ul>
+      <li>情報収集 → 要点抽出 → 叩き台作成</li>
+      <li>コード雛形 → 修正案 → テスト観点出し</li>
+      <li>FAQ草案 → 社内文書の整形 → 翻訳</li>
+    </ul>
+
+    <p>ただし重要なのは、<strong>自動化が進むほど「任せ方の設計」が価値になる</strong>ことです。NISTのAIリスクマネジメント（AI RMF）でも、責任あるAIの実践として「設計・開発・運用の意思決定を、意図した目的や価値観に合致させる」考え方が示されています。</p>
+
+    <hr style="border: 0; border-top: 1px solid var(--line); margin: 2em 0;">
+
+    <h2>2. 人間の役割が変わってくる（作業→監督・判断・説明責任へ）🧭</h2>
+
+    <p>現場で増えてくるのは、「AIが作ったので…」という免責の空気ではなく、<strong>人が判断し、問題が起きたら改善する</strong>という運用設計です。東洋経済にも「『これ、AIが作ったんです』は思考停止のサイン」という趣旨の記事があります。</p>
+
+    <p>また、国の「AI事業者ガイドライン」では、アカウンタビリティについて <strong>「AIに関する事実上・法律上の責任を負うこと」</strong> や、<strong>責任者の明示／関係者間の責任の分配</strong> といった観点が整理されています。
+    つまり、AIを使うほど「責任が消える」のではなく、<strong>責任の置き場所を先に決める必要が増える</strong>という流れです。</p>
+
+    <blockquote>
+      <p>「透明性及び説明可能性は、適切な責任及び説明責任…に密接に関連する」──UNESCO勧告の日本語版（文科省掲載）</p>
+    </blockquote>
+
+    <hr style="border: 0; border-top: 1px solid var(--line); margin: 2em 0;">
+
+    <h2>3. ツール開発で実感：結局「方針」は人間が決める 🛠️</h2>
+
+    <p>自分でAIを使ったツールを作ってみると、ここが一番リアルに腑に落ちます。
+    AIは「案を出す」「形にする」速度は非常に速い一方で、<strong>どこへ向かうか</strong>は人間が決めないと前に進みません。</p>
+
+    <ul>
+      <li>発案：何を解決するか（課題の切り出し）</li>
+      <li>技術：どの方式・制約でいくか（実装可能性）</li>
+      <li>デザイン：体験のコンセプト、見た目の統一</li>
+      <li>UI：迷わせない導線、入力負担の最小化</li>
+      <li>品質：速度・正確性・安全性・不快さの基準</li>
+    </ul>
+
+    <p>これらはAIに"出してもらう"ことはできても、最後は人間が「これで行く」と決める領域だと感じます。</p>
+
+    <hr style="border: 0; border-top: 1px solid var(--line); margin: 2em 0;">
+
+    <h2>4. "最後に使わせる"立場＝ユーザーの時間を使う。だから品質責務が発生 ⏳</h2>
+
+    <p>社内向けでも社外向けでも、ツールを提供する側になると <strong>ユーザーの時間を使います</strong>。
+    つまり、AIが生成したアウトプットであっても、ユーザーに渡した瞬間に <strong>品質の責任</strong> が生まれます。</p>
+
+    <p>Salesforceの日本語記事でも、「AIエージェントが間違った意思決定をした場合、誰が責任を負うのか」「説明責任をどう確保するか」という論点が扱われています。
+    また、同じ筋で「最終的な正誤の判断は人間」「問題が生じたなら判断した者に責任がある」という主張も、日本語でまとまっています。</p>
+
+    <p>ここを踏まえると、AI導入は「作れたら勝ち」ではなく、</p>
+
+    <ul>
+      <li>誤りを前提にした検知（レビュー／テスト／ログ）</li>
+      <li>迷ったら止める設計（フェイルセーフ）</li>
+      <li>説明できる運用（誰が何を根拠に承認したか）</li>
+    </ul>
+
+    <p>がセットで必要になります。ガイドラインのチェックリストも、こうした実装・運用の観点を要約しています。</p>
+
+    <hr style="border: 0; border-top: 1px solid var(--line); margin: 2em 0;">
+
+    <h2>5. そろばん→電卓：結局キーを叩くのは人間の指 🧮➡️🖩</h2>
+
+    <p>そろばんが電卓に置き換わっても、計算という営みが消えたわけではありません。
+    <strong>人間の意図が、機械の速度を借りる形に変わった</strong>だけです。</p>
+
+    <p>AIも同様に、</p>
+
+    <ul>
+      <li>AIは"計算（生成）"を担う</li>
+      <li>人間は"何を計算させるか（問い・条件・評価）"を担う</li>
+      <li>そして"結果を使う責任"は人間側に残る</li>
+    </ul>
+
+    <p>という構図になりやすい、ということだと思います。</p>
+
+    <hr style="border: 0; border-top: 1px solid var(--line); margin: 2em 0;">
+
+    <h2>まとめ：FMIで大事にしたい「AI時代の人間の仕事」✅</h2>
+
+    <p>AIで自動化が進むほど、人間の価値は「作業量」ではなく、次の3つに寄っていくはずです。</p>
+
+    <ol>
+      <li><strong>方向を決める</strong>（目的・優先度・やらないこと）</li>
+      <li><strong>品質を担保する</strong>（ユーザー時間を守る）</li>
+      <li><strong>説明できる</strong>（判断の根拠と責任線）</li>
+    </ol>
+
+    <p>Forbes JAPANでも、AI支援の意思決定において「価値観の可視化」や「結果に対する説明責任」が、リーダーシップの価値基準として語られています。
+    社内でも「AIを使う＝責任が軽くなる」ではなく、「<strong>使うからこそ責任設計が必要</strong>」を共通認識にしていきたいところです。</p>
+
+    <div class="references">
+      <h2>参考リンク（社内共有用・URLそのまま）</h2>
+
+      <ul>
+        <li>東洋経済：AI時代､人間に残された｢3+1｣の仕事<br><a href="https://toyokeizai.net/articles/-/923742?display=b" target="_blank" rel="noopener">https://toyokeizai.net/articles/-/923742?display=b</a></li>
+
+        <li>東洋経済：｢AI時代に人間の仕事と呼べるものは何か｣（3+1の価値）<br><a href="https://toyokeizai.net/articles/-/917089?display=b" target="_blank" rel="noopener">https://toyokeizai.net/articles/-/917089?display=b</a></li>
+
+        <li>東洋経済：｢これ､AIが作ったんです｣は思考停止のサイン<br><a href="https://toyokeizai.net/articles/-/914285?display=b" target="_blank" rel="noopener">https://toyokeizai.net/articles/-/914285?display=b</a></li>
+
+        <li>Forbes JAPAN：AI時代のリーダーシップ再定義（説明責任に言及）<br><a href="https://forbesjapan.com/articles/detail/87444" target="_blank" rel="noopener">https://forbesjapan.com/articles/detail/87444</a></li>
+
+        <li>Forbes JAPAN：AIに対する説明責任が新たなリーダーシップの価値基準に<br><a href="https://forbesjapan.com/articles/detail/86038" target="_blank" rel="noopener">https://forbesjapan.com/articles/detail/86038</a></li>
+
+        <li>経産省ほか：AI事業者ガイドライン（PDF）<br><a href="https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/pdf/20241216_1.pdf" target="_blank" rel="noopener">https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/pdf/20241216_1.pdf</a></li>
+
+        <li>AI事業者ガイドライン（第1.1版）概要（PDF）<br><a href="https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/pdf/20250328_2.pdf" target="_blank" rel="noopener">https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/pdf/20250328_2.pdf</a></li>
+
+        <li>AI事業者ガイドライン：チェックリスト（PDF）<br><a href="https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/pdf/2023_003_02_05.pdf" target="_blank" rel="noopener">https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/pdf/2023_003_02_05.pdf</a></li>
+
+        <li>NIST AI RMF 1.0 日本語版（NIST公式の日本語PDF）<br><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.jpn.pdf" target="_blank" rel="noopener">https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.jpn.pdf</a></li>
+
+        <li>AISI（AIセーフティ・インスティテュート）による日本語翻訳版の案内<br><a href="https://aisi.go.jp/output/output_information/240704/" target="_blank" rel="noopener">https://aisi.go.jp/output/output_information/240704/</a></li>
+
+        <li>文科省：UNESCO「人工知能の倫理に関する勧告」（透明性・説明可能性と責任の関係）<br><a href="https://www.mext.go.jp/unesco/009/1411026_00004.htm" target="_blank" rel="noopener">https://www.mext.go.jp/unesco/009/1411026_00004.htm</a></li>
+
+        <li>Salesforce：AIエージェントの誤りは誰が責任を負うのか（説明責任）<br><a href="https://www.salesforce.com/jp/blog/ai-accountability/" target="_blank" rel="noopener">https://www.salesforce.com/jp/blog/ai-accountability/</a></li>
+
+        <li>サクラマガジン：機械にできず、ヒトにしかできない「責任を取る」という仕事<br><a href="https://sakumaga.sakura.ad.jp/entry/dx-sekinin/" target="_blank" rel="noopener">https://sakumaga.sakura.ad.jp/entry/dx-sekinin/</a></li>
+      </ul>
+    </div>
+
+  </main>
+
+  <footer>
+    © Keith CCC / GitHub Pages
+  </footer>
+</body>
+</html>
