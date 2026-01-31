@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>AIは優しすぎる──本音を引き出すRed Teamプロンプトという考え方 | Keith CCC Blog</title>
+
+  <style>
+    :root {
+      --bg: #0f1115;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #4f8cff;
+      --line: rgba(255,255,255,.08);
+      --code-bg: #1a1d24;
+    }
+
+    html { color-scheme: dark; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.85;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      margin: 0 0 0.6em;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin: 2em 0 0.8em;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 1.6em 0 0.6em;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 1em 0;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul, ol {
+      margin: 1em 0;
+      padding-left: 1.5em;
+    }
+
+    li {
+      margin: 0.3em 0;
+    }
+
+    strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    blockquote {
+      margin: 1.5em 0;
+      padding: 0.8em 1.2em;
+      border-left: 3px solid var(--accent);
+      background: var(--code-bg);
+      color: var(--muted);
+    }
+
+    pre {
+      background: var(--code-bg);
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2em;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      color: var(--accent);
+    }
+
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <a href="./index.html" class="back-link">Back to index</a>
+
+    <h1>AIは優しすぎる──本音を引き出すRed Teamプロンプトという考え方</h1>
+
+    <p>AIは、基本的にとても優しい。</p>
+<p>ChatGPT や Copilot を日常的に使っていると、それを強く感じる場面がある。「このアイデアどう思う？」と聞けば、「良い視点ですね」「可能性があります」「工夫すれば実現できそうです」と、まず否定しない。</p>
+<p>これは欠点ではない。むしろ<strong>人を傷つけない・使い続けてもらうための設計思想</strong>としては、極めて正しい。</p>
+<p>ただし──</p>
+<p><strong>本当に困るのは、失敗したくない場面</strong>だ。</p>
+<ul>
+<li>事業アイデアを実行する前</li>
+<li>プロダクトを公開する直前</li>
+<li>お金・信用・法務が絡む判断</li>
+</ul>
+<p>こうした局面では、「優しさ」はむしろノイズになる。
+欲しいのは共感ではなく、<strong>本音・欠陥・破綻点</strong>だからだ。</p>
+<hr />
+<h2>なぜAIは本音を言わないのか</h2>
+<p>今のAIは、人間の言葉や反応を大量に学習して作られている。
+そして多くの場合、人間が好むのは「否定されない返答」だ。</p>
+<p>結果としてAIは、次のようなバイアスを持つ。</p>
+<ul>
+<li>まず肯定から入る</li>
+<li>可能性を強調する</li>
+<li>批判を曖昧な表現に包む</li>
+</ul>
+<p>YouTube やブログでも、「AIは厳しいフィードバックを出さない」「ダメな案でも褒めてくる」という指摘を見かける。
+これはモデルの能力不足ではなく、<strong>設計上の性質</strong>だ。</p>
+<p>つまり、</p>
+<blockquote>
+<p>AIが優しいのではなく、優しく振る舞うように作られている</p>
+</blockquote>
+<p>というだけの話でもある。</p>
+<hr />
+<h2>批判は「引き出す」もの</h2>
+<p>ここで重要なのは、
+<strong>AIは批判できないわけではない</strong>という点だ。</p>
+<p>問い方・役割・前提を変えれば、AIは驚くほど冷静で厳しい視点を出してくる。</p>
+<p>そこで考えたのが、</p>
+<blockquote>
+<p><strong>自分を批判するためのAIプロンプトを作るAI</strong></p>
+</blockquote>
+<p>という発想だった。</p>
+<p>その中核にあるのが、<strong>Red Team（レッドチーム）</strong>という考え方だ。</p>
+<hr />
+<h2>Red Teamとは何か</h2>
+<p>Red Team はもともと、セキュリティや軍事の世界で使われる概念だ。</p>
+<ul>
+<li>Blue Team：守る側</li>
+<li>Red Team：攻撃する側</li>
+</ul>
+<p>あえて「壊す役」を用意し、
+<strong>どこが破れるかを事前に洗い出す</strong>。</p>
+<p>この発想を、アイデア・企画・思考そのものに適用したのが、
+<strong>Red Teamプロンプト</strong>だ。</p>
+<hr />
+<h2>Red Teamプロンプトの基本思想</h2>
+<p>Red Teamプロンプトでは、AIに次の役割を与える。</p>
+<ul>
+<li>成功させるために考えない</li>
+<li>励まさない</li>
+<li>可能性を語らない</li>
+<li>失敗するとしたら「どこか」だけを見る</li>
+</ul>
+<p>つまり、AIを「優秀な相談相手」ではなく、
+<strong>失敗を専門に探す第三者</strong>として扱う。</p>
+<hr />
+<h2>Red Teamプロンプト（例）</h2>
+<p>以下は、実際に使っているプロンプトの一例だ。</p>
+<pre><code>あなたは Red Team Reviewer です。
+
+あなたの役割は、このアイデアや計画を
+「成功させる」ためではなく、
+「失敗させるとしたらどこか」を見つけることです。
+
+忖度・共感・励ましは不要です。
+現実的に起こりうる破綻、欠陥、楽観的すぎる前提を
+優先度付きで指摘してください。
+</code></pre>
+<p>これだけで、AIの出力は大きく変わる。</p>
+<ul>
+<li>抽象論が減る</li>
+<li>前提条件への突っ込みが増える</li>
+<li>「人間がサボったらどうなるか」を見始める</li>
+</ul>
+<p>まさに、<strong>優しさのスイッチが切れる</strong>。</p>
+<hr />
+<h2>GPTsとしての実装</h2>
+<p>この Red Team プロンプトは、
+ChatGPT の GPTs 機能を使えば <strong>専用AIとして固定化</strong>できる。</p>
+<ul>
+<li>常に批判役</li>
+<li>常に失敗視点</li>
+<li>相談モードに戻らない</li>
+</ul>
+<p>という状態を作れるため、
+「判断前のチェック用AI」として非常に扱いやすい。</p>
+<p>（※ 実際に使っている GPTs へのリンクは記事末尾に掲載予定）</p>
+<hr />
+<h2>Red Teamプロンプトの実例（M&amp;Aコンサルの場合）</h2>
+<p>ここで、実際に Red Team GPTs に投げた簡単な例を紹介する。</p>
+<p>一見すると合理的で、現場でも「やりそう」な新規事業案だが、
+Red Team視点ではどこが危険になるのかがはっきり見える。</p>
+<h3>入力例</h3>
+<pre><code>【前提】
+中堅のM&amp;Aコンサルティング会社が、
+生成AIを活用した「簡易デューデリジェンス支援サービス」を新規事業として立ち上げる。
+
+【概要】
+- 中小企業向けM&amp;A案件を対象
+- 財務資料・契約書・議事録などをAIに読み込ませ、
+  リスクポイントを自動でサマリー化
+- 初期は既存顧客向けのオプションサービスとして提供
+- コンサルタントの工数削減と差別化を狙う
+
+【狙い】
+- 案件処理スピードの向上
+- 若手コンサルの品質ばらつき低減
+- 「AI活用型M&amp;Aファーム」というブランド確立
+</code></pre>
+<h3>Red Team Reviewer の出力例</h3>
+<pre><code>【致命的リスク（優先度 高）】
+- AIアウトプットの誤読・過信による判断事故
+- なぜ現実的に起きるか：
+  デューデリジェンスでは「書いていないこと」「文脈」が重要になる。
+  AIの要約はそれらを構造的に落としやすく、
+  若手や忙しいコンサルほどAI結果を事実として扱いがち。
+  判断ミスが起きた場合、責任は最終的に会社側に集中する。
+
+【見落とされがちなリスク（優先度 中）】
+- 顧客側の期待値が過剰に膨らむ
+- なぜ気づきにくいか：
+  「AIがチェックした」という言葉が、
+  実際以上の網羅性・正確性を想起させる。
+  契約書で責任範囲を限定しても、
+  トラブル時には説明不足・誤認を理由に信用問題へ発展しやすい。
+
+【後から効いてくるリスク（優先度 低）】
+- コンサルタントの判断力低下
+- 放置した場合の影響：
+  AI要約に依存する運用が定着すると、
+  人間側が「読み切る力」を失う。
+  結果として難易度の高い案件ほど対応できなくなり、
+  事業の上限が下がる。
+</code></pre>
+<p>この例で分かる通り、
+Red Teamプロンプトは「アイデアを否定する」ためのものではない。</p>
+<p><strong>失敗するとしたら、どこから壊れるか</strong>を先に見せるための道具だ。</p>
+<hr />
+<h2>注意点：万能ではない</h2>
+<p>ただし、Red Teamは万能ではない。</p>
+<ul>
+<li>発想初期に使うと、アイデアを潰しすぎる</li>
+<li>新規性が高いほど、保守的な評価になりやすい</li>
+</ul>
+<p>これは<strong>包丁</strong>のようなものだ。</p>
+<ul>
+<li>使う場面を選ぶ</li>
+<li>常用しない</li>
+<li>判断直前にだけ使う</li>
+</ul>
+<p>これを守らないと、思考そのものが萎縮する。</p>
+<hr />
+<h2>AIは優しすぎる。でも、それは変えられる</h2>
+<p>AIが優しいのは、欠点ではない。
+ただし、
+<strong>本音が欲しい場面では、役割を変える必要がある</strong>。</p>
+<p>Red Teamプロンプトは、
+AIに「嫌われ役」を引き受けさせるための仕組みだ。</p>
+<p>褒められたい時は、普通に使えばいい。</p>
+<p>でも、</p>
+<ul>
+<li>本当に進めていいか</li>
+<li>失敗するとしたらどこか</li>
+</ul>
+<p>それを知りたい時だけ、
+<strong>AIを敵に回す</strong>。</p>
+<p>それくらいで、ちょうどいい。</p>
+  </main>
+
+  <footer>
+    &copy; Keith CCC Blog / GitHub Pages
+  </footer>
+</body>
+</html>
