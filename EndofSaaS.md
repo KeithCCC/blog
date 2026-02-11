@@ -9,6 +9,34 @@
 **SaaSが当たり前になりすぎた結果、価値の置き場所が変わった**。
 それが、いま起きている変化です。
 
+## まず、公開データで確認できる事実
+
+このテーマに合わせ、2025年以降の「株価・評価」の公開データだけに絞って見ると、次の傾向が確認できます。
+
+- **クラウド/SaaS系ETFは、2025年にすでにマイナス圏の銘柄群がある**  
+  WisdomTree Cloud Computing Fund（WCLD）の2025年末データでは、  
+  YTD（NAV）が **-6.64%**。  
+  参考: https://www.wisdomtree.com/investments/etfs/megatrends/wcld
+
+- **ソフトウェア大型ETFも、2026年初に急落して再評価局面へ**  
+  iShares IGV では、2025年の通年リターンは **+5.62%** だった一方、  
+  2026-02-09時点YTDは **-19.55%**。  
+  参考: https://www.ishares.com/us/products/239771/ishares-north-american-techsoftware-etf
+
+- **「売上成長だけで高評価」は崩れ、バリュエーションは2025年に圧縮**  
+  SEG 2026 Annual SaaS Reportでは、SEG SaaS IndexのEV/Revenue中央値が  
+  **6.4x（1Q25）→ 4.8x（4Q25）** まで低下。  
+  参考: https://softwareequity.com/research/annual-saas-report
+
+- **一方でM&Aは増加し、業界は“消滅”ではなく“選別・再編”へ**  
+  同レポートでは2025年SaaS M&Aが **2,698件（前年比+28%）**。  
+  つまり資金が消えたのではなく、評価軸が厳格化したと読めます。  
+  参考: https://softwareequity.com/research/annual-saas-report
+
+要するに、2025年以降は  
+**「SaaSそのものの終わり」ではなく、「SaaSの価値評価の見直し」**が進んでいる、  
+というのがデータからの読み取りです。
+
 ## 先に結論
 
 これからの競争力は、
