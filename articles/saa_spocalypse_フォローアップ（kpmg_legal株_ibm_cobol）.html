@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>[Saaspocalypseは、一般ユーザ企業の現場ではもう始まっている](https://keithccc.github.io/blog/articles/EndofSaaS.html) フォローアップ | Keith CCC Blog</title>
+
+  <style>
+    :root {
+      --bg: #0f1115;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #4f8cff;
+      --line: rgba(255,255,255,.08);
+      --code-bg: #1a1d24;
+    }
+
+    html { color-scheme: dark; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.85;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      margin: 0 0 0.6em;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin: 2em 0 0.8em;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 1.6em 0 0.6em;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 1em 0;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul, ol {
+      margin: 1em 0;
+      padding-left: 1.5em;
+    }
+
+    li {
+      margin: 0.3em 0;
+    }
+
+    strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    blockquote {
+      margin: 1.5em 0;
+      padding: 0.8em 1.2em;
+      border-left: 3px solid var(--accent);
+      background: var(--code-bg);
+      color: var(--muted);
+    }
+
+    pre {
+      background: var(--code-bg);
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2em;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      color: var(--accent);
+    }
+
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <a href="./index.html" class="back-link">Back to index</a>
+
+    <h1>
+      <a href="https://keithccc.github.io/blog/articles/EndofSaaS.html">
+        Saaspocalypseは、一般ユーザ企業の現場ではもう始まっている
+      </a>
+      フォローアップ
+    </h1>
+    <h2>目的</h2>
+<p>前回の「Saaspocalypseは、一般ユーザ企業の現場ではもう始まっている（SaaS的前提の崩れ）」の続編として、</p>
+<ul>
+<li><strong>KPMG（プロフェッショナルファーム側の動き）</strong></li>
+<li><strong>法務・リーガル領域の企業／市場の反応（株価と事業側の対抗策）</strong></li>
+<li><strong>IBM/COBOL（レガシー価値の再評価）</strong>
+  を一本の線でつなぐ。</li>
+</ul>
+<p>中心メッセージは1つ：</p>
+<blockquote>
+<p><strong>AIの影響は、これまで人類が経験したことのないスピードで市場と現場を動かしている。</strong></p>
+</blockquote>
+<hr />
+<h2>1. KPMGは「AIを使った」ではなく「AI前提の仕事設計」に踏み込んだ</h2>
+<h3>1-1. KPMGの象徴的な動き：巨大プロンプトで“業務を1日化”</h3>
+<p>KPMG（豪州）が、<strong>100ページ級のプロンプト（設計資産）</strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em>*で“TaxBot”を構築し、従来</strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em>*2週間かかっていた税務アドバイス作業を1日規模に短縮</strong>した事例が報じられている。</p>
+<ul>
+<li>これは「AIを試した」ではなく、<strong>AIに合わせて業務を再設計した</strong>話。</li>
+<li>価値はモデルそのものより、</li>
+<li>何をインプットにするか</li>
+<li>どこまでをAIに任せるか</li>
+<li>どの形式でアウトプットさせるか</li>
+<li>品質保証と責任境界をどう取るか
+    という**設計（＝仕事の型）**にある。</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li>KPMGの100ページプロンプトTaxBot（The Register）</li>
+<li>同件を扱うTechRadar等</li>
+</ul>
+<h3>1-2. KPMGは「法務部門のAI導入」も“ユースケース設計”から支援</h3>
+<p>KPMGはMicrosoftと連携し、企業法務部門向けに</p>
+<ul>
+<li><strong>生成AIユースケースの作り方</strong></li>
+<li><strong>リスクやガバナンスを踏まえた導入の進め方</strong>
+  をワークショップ型で支援していると報じられている。
+  ここでもテーマは「ツール紹介」ではなく、
+  <strong>法務プロセスにAIをどう埋め込むか（運用設計）</strong>。</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li>KPMG×Microsoftによる法務部門向け支援（Legal Dive）</li>
+<li>KPMG×MicrosoftのAI提携（KPMG公式／Microsoft公式）</li>
+</ul>
+<hr />
+<h2>2. 法務系企業（リーガル／データ／SaaS）の反応：株価急落 → “反撃”と再評価</h2>
+<h3>2-1. きっかけ：Anthropicの法務向けプラグインが「市場売り」を引き起こす</h3>
+<p>Reutersは、Anthropicの**法務自動化ツール（legal tool / legal plug-in）**が引き金となり、
+ソフトウェア・データ企業に大きな売りが出たと報じた。</p>
+<ul>
+<li><strong>世界のソフトウェア／サービス株で大規模な売り（約1兆ドル規模と報じられるケースも）</strong></li>
+<li>欧州のデータ／法務関連銘柄（RELX、Wolters Kluwer、Sageなど）に売り</li>
+<li>米Thomson Reutersも大きく下落</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li>Reuters（2/4）：Anthropicのlegal toolが引き金になったソフトウェア株の大規模売り</li>
+<li>Reuters（2/3）：欧州ソフトウェア・データ株への売り圧力（RELX等）</li>
+<li>Guardian（2/3）：欧州のデータ／法務関連企業の株価下落の報道</li>
+<li>Morningstar（2/5）：Anthropic法務プラグイン発表後の主要銘柄下落まとめ</li>
+</ul>
+<h3>2-2. 企業側の反撃：Thomson Reutersの「CoCounsel 1Mユーザー」</h3>
+<p>興味深いのは、その後の“揺り戻し”。
+Reutersは、Thomson ReutersがAI法務アシスタント<strong>CoCounselの利用者100万人</strong>を公表し、
+株価が大きく上昇したと報じた。</p>
+<ul>
+<li>ここでの主張は「AIに負けない」ではなく、</li>
+<li><strong>独自コンテンツ（法令・判例など）</strong></li>
+<li>資本力</li>
+<li>既存ワークフローへの統合
+    で<strong>AI時代の勝ち筋を作れる</strong>という論理。</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li>Reuters（2/24）：CoCounsel 1MユーザーでThomson Reuters株が上昇</li>
+</ul>
+<h3>2-3. 重要な読み：市場が恐れたのは“機能追加”ではなく「価格モデルの崩壊」</h3>
+<p>法務領域のAIは、単なる自動化ではなく、</p>
+<ul>
+<li><strong>課金根拠（席課金・データ課金・時間課金）</strong></li>
+<li><strong>専門家の作業時間（billable hours）</strong></li>
+<li><strong>検索・調査の囲い込み（データベース）</strong>
+  といった“収益モデルの前提”に触れる。</li>
+</ul>
+<p>市場の急落は、</p>
+<blockquote>
+<p>「AIが業務を代替するか」
+よりも
+<strong>「既存の値付けが崩れるか」</strong>
+を先に織り込みにいった、と読むのが自然。</p>
+</blockquote>
+<hr />
+<h2>3. IBM/COBOL：レガシーの“時間価値”がAIで溶けた</h2>
+<p>Reutersは、AnthropicがCOBOL近代化を支援できると示した後、
+<strong>IBM株が大きく下落</strong>したと報じた。</p>
+<ul>
+<li>COBOLやメインフレーム周辺は、長年</li>
+<li>保守</li>
+<li>移行</li>
+<li>モダナイゼーション
+    という“長期・高単価”の時間価値で成立していた</li>
+<li>AIがそこを短縮する可能性を示すと、
+  <strong>価値の源泉（時間）が再評価される</strong></li>
+</ul>
+<p>参考：</p>
+<ul>
+<li>Reuters（2/24）：IBM株下落とAnthropicのCOBOL近代化言及</li>
+<li>Reuters（2/24）：ソフトウェア株の戻りとIBMショックへの言及</li>
+</ul>
+<hr />
+<h2>4. まとめ：SaaSpocalypseの本質は「SaaSが終わる」ではなく“時間の価値が崩れる速度”</h2>
+<p>今回の3点（KPMG／法務市場／IBMレガシー）をつなぐと、共通点は1つ。</p>
+<ul>
+<li>価値は「機能」ではなく</li>
+<li>価値は「時間」でもなくなりつつあり</li>
+<li>価値は <strong>“AI前提で再設計できるか”</strong> に移動している</li>
+</ul>
+<p>そして何より、</p>
+<blockquote>
+<p><strong>その移動が、これまでの技術変化より桁違いに速い。</strong></p>
+</blockquote>
+<hr />
+<h2>Reference URLs（引用元）</h2>
+<ul>
+<li>
+<p>Reuters（Thomson Reuters：CoCounsel 1M users）: <a href="https://www.reuters.com/business/thomson-reuters-shares-rally-after-cocounsel-ai-tool-draws-1-million-users-2026-02-24/">https://www.reuters.com/business/thomson-reuters-shares-rally-after-cocounsel-ai-tool-draws-1-million-users-2026-02-24/</a></p>
+</li>
+<li>
+<p>Reuters（Anthropic legal plug-in → ソフトウェア株大規模売り）: <a href="https://www.reuters.com/business/media-telecom/global-software-stocks-hit-by-anthropic-wake-up-call-ai-disruption-2026-02-04/">https://www.reuters.com/business/media-telecom/global-software-stocks-hit-by-anthropic-wake-up-call-ai-disruption-2026-02-04/</a></p>
+</li>
+<li>
+<p>Reuters（欧州ソフトウェア・データ株への売り）: <a href="https://www.reuters.com/business/media-telecom/ai-concerns-pummel-european-software-stocks-2026-02-03/">https://www.reuters.com/business/media-telecom/ai-concerns-pummel-european-software-stocks-2026-02-03/</a></p>
+</li>
+<li>
+<p>Reuters（Anthropic 新AIツール、legal plug-in後の市場動揺に言及）: <a href="https://www.reuters.com/business/finance/anthropic-touts-new-ai-tools-weeks-after-legal-plug-in-spurred-market-rout-2026-02-24/">https://www.reuters.com/business/finance/anthropic-touts-new-ai-tools-weeks-after-legal-plug-in-spurred-market-rout-2026-02-24/</a></p>
+</li>
+<li>
+<p>Guardian（Anthropic legal tool → 欧州データ/法務株下落）: <a href="https://www.theguardian.com/technology/2026/feb/03/anthropic-ai-legal-tool-shares-data-services-pearson">https://www.theguardian.com/technology/2026/feb/03/anthropic-ai-legal-tool-shares-data-services-pearson</a></p>
+</li>
+<li>
+<p>Morningstar（主要銘柄：Thomson Reuters/RELX/Wolters等の下落まとめ）: <a href="https://global.morningstar.com/ja/stocks/thomson-reuters-relx-wolters-stocks-crushed-after-anthropic-debuts-claude-legal-plug-in">https://global.morningstar.com/ja/stocks/thomson-reuters-relx-wolters-stocks-crushed-after-anthropic-debuts-claude-legal-plug-in</a></p>
+</li>
+<li>
+<p>KPMG 100ページプロンプトTaxBot（The Register）: <a href="https://www.theregister.com/2025/08/20/kpmg_giant_prompt_tax_agent/">https://www.theregister.com/2025/08/20/kpmg_giant_prompt_tax_agent/</a></p>
+</li>
+<li>
+<p>KPMG×Microsoft 法務部門向けAI支援（Legal Dive）: <a href="https://www.legaldive.com/news/kpmg-microsoft-ai-collaboration-ai-use-cases-legal-departments/702328/">https://www.legaldive.com/news/kpmg-microsoft-ai-collaboration-ai-use-cases-legal-departments/702328/</a></p>
+</li>
+<li>
+<p>KPMG×Microsoft AI提携（KPMG公式）: <a href="https://kpmg.com/us/en/media/news/kpmg-microsoft-agreement-2023.html">https://kpmg.com/us/en/media/news/kpmg-microsoft-agreement-2023.html</a></p>
+</li>
+<li>
+<p>KPMG×Microsoft AI提携（Microsoft公式）: <a href="https://news.microsoft.com/source/2023/07/11/kpmg-and-microsoft-enter-landmark-agreement-to-put-ai-at-the-forefront-of-professional-services/">https://news.microsoft.com/source/2023/07/11/kpmg-and-microsoft-enter-landmark-agreement-to-put-ai-at-the-forefront-of-professional-services/</a></p>
+</li>
+</ul>
+<hr />
+<h2></h2>
+  </main>
+
+  <footer>
+    &copy; Keith CCC Blog / GitHub Pages
+  </footer>
+</body>
+</html>
