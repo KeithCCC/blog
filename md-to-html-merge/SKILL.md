@@ -35,6 +35,8 @@ python md-to-html-merge/scripts/md_to_html_merge.py `
 - Otherwise use the first `# Heading` as title and today as date.
 - Convert Markdown to HTML via the Python `markdown` package if available, else try `pandoc`.
 - Wrap the HTML in a page template that matches the blog styling.
+- Append this footer to generated HTML:
+  `<footer><p>© 2025 Keith Chen. All rights reserved.</p></footer>`
 - Insert a new list item at the top of `<ul class="post-list">` in `index.html`.
 - Skip insertion if the link already exists.
 

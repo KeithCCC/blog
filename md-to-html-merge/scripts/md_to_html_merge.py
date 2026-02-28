@@ -222,7 +222,7 @@ def build_html(title: str, body_html: str, site_title: str) -> str:
   </main>
 
   <footer>
-    &copy; {escaped_site} / GitHub Pages
+    <p>© 2025 Keith Chen. All rights reserved.</p>
   </footer>
 </body>
 </html>

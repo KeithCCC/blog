@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>「6ヶ月後に開発職が終わる」論に、今いちど現実的に向き合う | Keith CCC Blog</title>
+
+  <style>
+    :root {
+      --bg: #0f1115;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #4f8cff;
+      --line: rgba(255,255,255,.08);
+      --code-bg: #1a1d24;
+    }
+
+    html { color-scheme: dark; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.85;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      margin: 0 0 0.6em;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin: 2em 0 0.8em;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 1.6em 0 0.6em;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 1em 0;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul, ol {
+      margin: 1em 0;
+      padding-left: 1.5em;
+    }
+
+    li {
+      margin: 0.3em 0;
+    }
+
+    strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    blockquote {
+      margin: 1.5em 0;
+      padding: 0.8em 1.2em;
+      border-left: 3px solid var(--accent);
+      background: var(--code-bg);
+      color: var(--muted);
+    }
+
+    pre {
+      background: var(--code-bg);
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2em;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      color: var(--accent);
+    }
+
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <a href="./index.html" class="back-link">Back to index</a>
+
+    <h1>「6ヶ月後に開発職が終わる」論に、今いちど現実的に向き合う</h1>
+
+    <p>Youtube <a href="https://www.youtube.com/watch?v=p2aea9dytpE">Software engineering is dead now</a> 視聴感想</p>
+<p>「AIがあと6ヶ月で開発者の仕事を奪う」
+この手のミームは何年も擦られてきました。けれど最近は、笑い話として処理しにくい“手触り”が出てきたのも事実です。</p>
+<p>個人がAIを使って2週間でそれなりのプロダクトを作る。
+大企業より小さなチームのほうが速く出す。
+コードの生産自体が“ほぼ無料”に近づく。</p>
+<p>こうした現象が積み上がるほど、エンジニアとしては不安にもなるし、焦りも出ます。
+ただ、ここで一番危険なのは「終わりだ」と結論を急ぎ、現実の構造を取り違えることです。</p>
+<p>結論から言うと、起きているのは「開発者の終わり」ではなく、<strong>開発の重心移動</strong>です。</p>
+<hr />
+<h2>1. コードは“価値”から“素材”へ移動している</h2>
+<p>ここ数年で変わったのは、単にLLMが賢くなったことではありません。
+「コードを書く」行為そのものが、開発の中で占めていたコストと希少性が急速に下がったことです。</p>
+<p>かつての開発は、コードが“石材”でした。
+採掘も運搬も加工も高コストで、熟練が必要で、だからこそ価値がありました。</p>
+<p>今のコードは、“水”に近づいています。
+流せば増える。生成すれば広がる。スピードも量も出る。</p>
+<p>ただし、水は形を持ちません。
+形を決める「器」が必要です。</p>
+<p>その器にあたるのが、以下です。</p>
+<ul>
+<li>問題定義（ユーザーの痛みを言語化し、優先順位を付ける）</li>
+<li>仕様化（曖昧さを潰し、境界条件を明確にする）</li>
+<li>受け入れ条件・品質保証（テスト、QA、監視、ロールバック）</li>
+<li>運用・責任（障害対応、セキュリティ、コンプラ、監査）</li>
+</ul>
+<p><strong>コードが安くなればなるほど、器の価値が上がります。</strong></p>
+<hr />
+<h2>2. 消えるのは「開発者」ではなく「ボトルネックの位置」</h2>
+<p>従来、開発のボトルネックは多くのケースで「実装」でした。</p>
+<ul>
+<li>仕様はある</li>
+<li>やりたいことも分かる</li>
+<li>でも手が足りず、コードが書けない</li>
+</ul>
+<p>だからエンジニアを増やし、コードを書いて前へ進む。</p>
+<p>ところが、AIにより「実装」が安くなると、ボトルネックは別の場所へ移動します。</p>
+<ul>
+<li>レビュー（安全にマージするための統制）</li>
+<li>テスト（壊れていないことの保証）</li>
+<li>QA（使ってみたときに成立しているか）</li>
+<li>リリース（段階的公開、監視、即時ロールバック）</li>
+</ul>
+<p>つまり「書ける」より「出せる」のほうが難しくなる。</p>
+<p>ここを見誤ると、「コードが生成できる＝開発が終わる」に飛躍してしまいます。</p>
+<hr />
+<h2>3. 影響を受けやすい人、受けにくい人</h2>
+<p>今後、相対的に影響を受けやすいのは次のタイプです。</p>
+<ul>
+<li>指示待ちで、チケットを“実装するだけ”の人</li>
+<li>ユーザーや業務を知らず、成功条件を言語化できない人</li>
+<li>QAや運用を軽視し、品質責任を持たない人</li>
+<li>レビューや検証が遅く、リリース速度を落とす人</li>
+</ul>
+<p>逆に、価値が上がるのは次のタイプです。</p>
+<ul>
+<li>ユーザー課題を理解し、問題定義できる人</li>
+<li>仕様と境界条件を設計し、AIを正しく“使役”できる人</li>
+<li>テスト戦略・監視・ロールバックを設計できる人</li>
+<li>セキュリティやコンプラ、データ責任に踏み込める人</li>
+</ul>
+<p>ここで重要なのは、AI時代に価値が上がるのは「コードを書く速さ」ではなく、<strong>成果に対する責任を引き受けられる能力</strong>だという点です。</p>
+<hr />
+<h2>4. 「小さいチームが勝つ」には理由がある</h2>
+<p>AIで実装が安くなると、組織の“摩擦”が相対的に目立ちます。</p>
+<ul>
+<li>承認が多い</li>
+<li>関係者が多い</li>
+<li>オーナーシップが分散している</li>
+<li>レビュー待ちが長い</li>
+<li>リリース窓が限られている</li>
+</ul>
+<p>大きい組織は巨大な船のように、方向転換が遅い。
+小さいチームは小型艇のように、進路変更が速い。</p>
+<p>この差がAIで拡大します。
+だから、経営者が「フラット化」「小規模化」を志向するのは合理的です。</p>
+<p>ただし、誤解してはいけないのはここです。</p>
+<blockquote>
+<p>小さいチームが勝つ ＝ 開発者が不要になる
+ではありません。</p>
+</blockquote>
+<p>小さいチームで勝つには、むしろ一人ひとりが
+<strong>問題定義・仕様・品質・運用</strong>まで含めて背負う必要があります。</p>
+<hr />
+<h2>5. “コードだけのプロダクト”は確かに危ない</h2>
+<p>AIの進化で一番厳しくなるのは、競争優位が「コードそのもの」しかない領域です。</p>
+<ul>
+<li>よくあるCRUD</li>
+<li>特徴がUIとワークフローだけ</li>
+<li>参入障壁が実装コストのみ</li>
+</ul>
+<p>こうした領域は、模倣コストが下がるほど価格競争に引きずられます。</p>
+<p>一方、置き換えが難しい資産もあります。</p>
+<ul>
+<li>規制・契約・提携</li>
+<li>データとその権利</li>
+<li>信頼（ブランド、監査、責任体制）</li>
+<li>決済・金融・医療などの制度的障壁</li>
+<li>スイッチングコスト（業務への深い埋め込み）</li>
+</ul>
+<p>多くの企業プロダクトは、コード以上にこれらで守られています。
+だから「すべてが2週間で置き換わる」わけではありません。</p>
+<hr />
+<h2>6. これからのエンジニアは「器を作る人」になる</h2>
+<p>ここまでをまとめると、メッセージはシンプルです。</p>
+<ul>
+<li>コードは安くなる</li>
+<li>その結果、ボトルネックは“出荷側”へ移る</li>
+<li>価値は「実装」から「構造と責任」へ移る</li>
+</ul>
+<p>AI時代のエンジニアは、次の能力を磨くほど強くなります。</p>
+<ul>
+<li>課題発見と問題定義</li>
+<li>仕様化（境界条件、例外、非機能）</li>
+<li>テスト戦略（ユニット/統合/E2E、回帰）</li>
+<li>リリース設計（段階的公開、監視、即時ロールバック）</li>
+<li>事故を前提にした運用（SLO、アラート、ポストモーテム）</li>
+<li>セキュリティとコンプライアンス</li>
+</ul>
+<p>これらは地味で、嫌われがちで、しかしプロダクトの生存を決める要素です。</p>
+<hr />
+<h2>結論：終わりではなく、選別が始まった</h2>
+<p>「変化は起きている」のは事実です。
+ただ、それは「開発職が消える」という形ではなく、</p>
+<p><strong>開発者に求められる価値が変わる</strong>という形で進みます。</p>
+<p>タイピング職としての価値は下がります。
+一方で、設計・品質・運用・責任を引き受ける能力は上がります。</p>
+<p>終わりではありません。
+重心移動です。</p>
+<p>そして、重心移動はいつも、適応できた人から先に“次の地面”へ移ります。</p>
+  </main>
+
+  <footer>
+    <p>© 2025 Keith Chen. All rights reserved.</p>
+  </footer>
+</body>
+</html>
