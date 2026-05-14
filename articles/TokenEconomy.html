@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>AIは使い放題から原価管理へ: Token Economyが経営に与える影響 | Keith CCC Blog</title>
+
+  <style>
+    :root {
+      --bg: #0f1115;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #4f8cff;
+      --line: rgba(255,255,255,.08);
+      --code-bg: #1a1d24;
+    }
+
+    html { color-scheme: dark; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.85;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      margin: 0 0 0.6em;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin: 2em 0 0.8em;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 1.6em 0 0.6em;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 1em 0;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul, ol {
+      margin: 1em 0;
+      padding-left: 1.5em;
+    }
+
+    li {
+      margin: 0.3em 0;
+    }
+
+    strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    blockquote {
+      margin: 1.5em 0;
+      padding: 0.8em 1.2em;
+      border-left: 3px solid var(--accent);
+      background: var(--code-bg);
+      color: var(--muted);
+    }
+
+    pre {
+      background: var(--code-bg);
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5em 0;
+      font-size: 0.92rem;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 0.65em 0.75em;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--code-bg);
+      color: #fff;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(255,255,255,.025);
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2em;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      color: var(--accent);
+    }
+
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <a href="./index.html" class="back-link">Back to index</a>
+
+    <h1>AIは使い放題から原価管理へ: Token Economyが経営に与える影響</h1>
+
+    <p>AIは「月額料金を払えば使い放題のソフトウェア」ではなくなりつつあります。</p>
+<p>Microsoft 365ではAI creditsが導入され、Salesforce AgentforceはFlex Creditsや会話単位の課金を用意し、GitHub Copilotも2026年6月1日からAI Creditsによるusage-based billingへ移行します。</p>
+<p>一見ばらばらに見えるこれらの価格変更は、同じ構造を示しています。</p>
+<p><strong>AIは使われるほど原価が発生する。そして、その原価を測る代表的な単位がtokenです。</strong></p>
+<p>この記事では、エンジニア向けの細かい技術論ではなく、経営・コンサルティングの視点からToken Economyを整理します。</p>
+<h2>いま何が起きているのか</h2>
+<p>まず、最近の動きを3つ見ておきます。</p>
+<table>
+<thead>
+<tr>
+<th>企業・サービス</th>
+<th>何が起きているか</th>
+<th>経営上の意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft 365</td>
+<td>Copilotや画像生成などのAI機能にAI creditsを導入</td>
+<td>日常業務AIも、裏側では利用量を管理する方向へ進んでいる</td>
+</tr>
+<tr>
+<td>Salesforce Agentforce</td>
+<td>Flex Credits、Conversations、per-user licensingなど複数の課金方式を提示</td>
+<td>AIエージェントを「席数」だけでなく、業務量や成果に近い単位で売ろうとしている</td>
+</tr>
+<tr>
+<td>GitHub Copilot</td>
+<td>2026年6月1日からAI Creditsへ移行し、input / output / cached tokensに基づいて利用量を計算</td>
+<td>短い質問と長時間の自律エージェント作業を同じ料金では扱えなくなった</td>
+</tr>
+</tbody>
+</table>
+<p>GitHubは開発者向けの例ですが、ここで起きていることは開発部門だけの話ではありません。</p>
+<p>同じ構造は、営業、カスタマーサポート、バックオフィス、法務、調達、経営企画にも広がります。</p>
+<p>AIが「人の作業を補助する機能」から「業務を実行するエージェント」へ進むほど、利用量の差が大きくなります。</p>
+<p>短い要約を1回作るのと、AIエージェントが複数の資料を読み、外部ツールを使い、何度も考え直し、最終成果物を出すのとでは、裏側の原価がまったく違います。</p>
+<h2>Token Economyとは何か</h2>
+<p>Tokenとは、AIモデルが文章やコードを処理するための小さな単位です。</p>
+<p>日本語の文字、英単語、記号、空白、コードの断片などが、モデル内部ではtokenに分解されます。</p>
+<p>ただし、経営の視点では、tokenを細かく理解する必要はありません。</p>
+<p>重要なのは次の点です。</p>
+<blockquote>
+<p>Tokenは、AIサービスの利用量と原価を測るための会計単位である。</p>
+</blockquote>
+<p>たとえばAIモデルのAPIでは、多くの場合、次のような単位で料金が決まります。</p>
+<table>
+<thead>
+<tr>
+<th>種類</th>
+<th>意味</th>
+<th>経営上の見方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input tokens</td>
+<td>AIに読ませる文章、指示、資料、会話履歴</td>
+<td>何をどれだけ読ませるかが原価になる</td>
+</tr>
+<tr>
+<td>Output tokens</td>
+<td>AIが生成する回答、文章、コード</td>
+<td>長く書かせるほど原価と待ち時間が増える</td>
+</tr>
+<tr>
+<td>Cached input tokens</td>
+<td>以前読ませた内容を再利用する入力</td>
+<td>設計次第で原価を大きく下げられる</td>
+</tr>
+<tr>
+<td>Reasoning / thinking tokens</td>
+<td>AIが内部で考えるために使う処理量</td>
+<td>複雑な問題やエージェント作業で増えやすい</td>
+</tr>
+<tr>
+<td>Tool-related tokens</td>
+<td>検索、コード実行、外部システム連携の結果</td>
+<td>AIが業務システムを使うほど増える</td>
+</tr>
+</tbody>
+</table>
+<p>つまりToken Economyとは、単に「AIの料金表」の話ではありません。</p>
+<p><strong>AIが業務を実行するとき、その仕事1件あたりにどれだけの計算資源を使い、誰がその原価リスクを持つのか、という経済設計の話です。</strong></p>
+<h2>なぜ固定サブスクだけでは難しいのか</h2>
+<p>従来のSaaSは、seat課金と相性がよいビジネスでした。</p>
+<p>1人あたり月額いくら、という形です。</p>
+<p>もちろんサーバー費用はかかりますが、ユーザーが少し多く使ったからといって、売上に比例して大きな原価が発生するわけではありませんでした。</p>
+<p>AI SaaSでは、この前提が崩れます。</p>
+<p>AI機能は、使われるほど推論コストが発生します。</p>
+<p>しかも、その使われ方には大きな差があります。</p>
+<table>
+<thead>
+<tr>
+<th>利用パターン</th>
+<th>例</th>
+<th>原価の特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>軽い利用</td>
+<td>メール文面の修正、短い要約、翻訳</td>
+<td>比較的安定して低い</td>
+</tr>
+<tr>
+<td>中程度の利用</td>
+<td>提案書ドラフト、議事録整理、FAQ回答</td>
+<td>入力資料と出力量で差が出る</td>
+</tr>
+<tr>
+<td>重い利用</td>
+<td>コード修正、契約書レビュー、調査エージェント、CS自動対応</td>
+<td>複数回の推論、ツール利用、長文コンテキストで原価が膨らむ</td>
+</tr>
+</tbody>
+</table>
+<p>同じ月額料金の中に、この3種類の利用をすべて入れると、ベンダー側の粗利が読みにくくなります。</p>
+<p>軽いユーザーでは利益が出ても、重いユーザーでは赤字になる可能性があります。</p>
+<p>これが、AI SaaSがcredits、usage-based billing、outcome pricingに向かう理由です。</p>
+<h2>経営にとっての本当の論点</h2>
+<p>Token Economyの本質は、技術ではなく経営管理です。</p>
+<p>特に重要なのは、次の4つです。</p>
+<h3>1. 粗利構造が変わる</h3>
+<p>従来SaaSでは、ソフトウェアの限界費用は小さいという前提がありました。</p>
+<p>AI SaaSでは、利用が増えるほど推論コストも増えます。</p>
+<p>AIエージェントが長時間働くほど、モデル呼び出し、入出力token、キャッシュ、ツール実行、場合によっては人間の確認コストも増えます。</p>
+<p>つまりAI SaaSは、ソフトウェアでありながら、BPOやクラウドインフラに近い原価感覚を持ち始めています。</p>
+<h3>2. 価格設計が複雑になる</h3>
+<p>AIサービスの価格は、単純なseat課金から次のような組み合わせに移っています。</p>
+<table>
+<thead>
+<tr>
+<th>価格モデル</th>
+<th>内容</th>
+<th>向いている用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seat pricing</td>
+<td>ユーザー数に応じて課金</td>
+<td>軽い日常利用、社内展開</td>
+</tr>
+<tr>
+<td>Credit-based pricing</td>
+<td>月額に一定の利用枠を含め、超過分を追加課金</td>
+<td>幅広い利用量を管理したい場合</td>
+</tr>
+<tr>
+<td>Usage-based pricing</td>
+<td>実際の利用量に応じて課金</td>
+<td>重いエージェント利用、API利用</td>
+</tr>
+<tr>
+<td>BYOK</td>
+<td>顧客が自分のAPI keyを持ち込む</td>
+<td>大企業、セキュリティ重視、原価を顧客側で管理したい場合</td>
+</tr>
+<tr>
+<td>Outcome pricing</td>
+<td>解決1件、会話1件、処理1件など成果単位で課金</td>
+<td>カスタマーサポート、営業、業務代行型AI</td>
+</tr>
+</tbody>
+</table>
+<p>外から見ると、AI価格は複雑に見えます。</p>
+<p>しかし内側では、ほぼ同じ問いに答えようとしています。</p>
+<p><strong>推論コストの変動リスクを、ベンダー、顧客、クレジットプール、成果単位のどこに置くのか。</strong></p>
+<h3>3. 予算統制が必要になる</h3>
+<p>AIツールは、導入時には小さく見えます。</p>
+<p>しかし本番利用が進むと、利用量は急に増えます。</p>
+<p>特にエージェント型AIでは、1回の依頼が裏側で何十回ものモデル呼び出しになることがあります。</p>
+<p>そのため企業側には、次のような管理が必要になります。</p>
+<ul>
+<li>部門別のAI利用量</li>
+<li>ユーザー別のheavy usage</li>
+<li>モデル別のコスト</li>
+<li>1業務あたりのAIコスト</li>
+<li>月次予算と超過アラート</li>
+<li>どの業務に高性能モデルを使うべきかのルール</li>
+</ul>
+<p>AI予算は、単なるライセンス管理ではなく、usage governanceの問題になります。</p>
+<h3>4. ベンダー選定の基準が変わる</h3>
+<p>これからのAIベンダー選定では、機能比較だけでは足りません。</p>
+<p>次の質問が重要になります。</p>
+<table>
+<thead>
+<tr>
+<th>確認すべき質問</th>
+<th>なぜ重要か</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>料金はseat、credit、usage、outcomeのどれか</td>
+<td>予算の読みやすさが変わる</td>
+</tr>
+<tr>
+<td>超過利用はどう課金されるか</td>
+<td>本番展開後の想定外コストを避ける</td>
+</tr>
+<tr>
+<td>利用量を部門別・ユーザー別に見られるか</td>
+<td>コスト配賦と統制に必要</td>
+</tr>
+<tr>
+<td>高性能モデルと低価格モデルを使い分けられるか</td>
+<td>品質と原価のバランスを取る</td>
+</tr>
+<tr>
+<td>BYOKは可能か</td>
+<td>セキュリティ、調達、原価管理に関わる</td>
+</tr>
+<tr>
+<td>キャッシュやBatch処理を活用できるか</td>
+<td>同じ業務を安く処理できる</td>
+</tr>
+<tr>
+<td>成果単位の料金なら、成果の定義は何か</td>
+<td>ベンダーと顧客の責任分界に関わる</td>
+</tr>
+</tbody>
+</table>
+<h2>Tokenは表から消え、裏側に残る</h2>
+<p>ここで注意すべきことがあります。</p>
+<p>将来、ユーザーがtoken単位でAIを買い続けるとは限りません。</p>
+<p>むしろ、経営層や業務部門にとって、tokenはわかりにくい単位です。</p>
+<p>カスタマーサポート部門が知りたいのは、「100万tokenでいくらか」ではありません。</p>
+<p>知りたいのは、次のような数字です。</p>
+<ul>
+<li>問い合わせ1件をいくらで解決できるか</li>
+<li>営業提案書1本をいくらで作れるか</li>
+<li>契約書レビュー1件をいくらで処理できるか</li>
+<li>月間のAI利用料が予算内に収まるか</li>
+<li>人間が対応した場合と比べて、品質とコストはどうか</li>
+</ul>
+<p>そのため、Token Economyの未来は「すべてがtoken課金になる」という話ではありません。</p>
+<p>むしろ逆です。</p>
+<p><strong>Tokenは、表の価格単位から、裏側の原価会計単位へ移っていく。</strong></p>
+<p>ユーザーにはseat、credit、conversation、resolution、workflow、outcomeとして見える。</p>
+<p>しかしベンダーの内部では、token、GPU時間、キャッシュ率、モデル単価、ツール実行時間が厳密に管理される。</p>
+<p>この二重構造が、AI時代の価格設計になります。</p>
+<h2>企業がいま持つべき視点</h2>
+<p>AI活用を考える企業は、「どのAIツールを入れるか」だけではなく、「AI利用をどう管理するか」を考える必要があります。</p>
+<p>見るべき指標は、単なる利用者数ではありません。</p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cost per task</td>
+<td>1件の業務をAIで処理する原価</td>
+</tr>
+<tr>
+<td>Cost per resolution</td>
+<td>問い合わせ1件を解決するコスト</td>
+</tr>
+<tr>
+<td>Cost per employee assisted</td>
+<td>AIで支援される従業員1人あたりのコスト</td>
+</tr>
+<tr>
+<td>Token / credit consumption by team</td>
+<td>部門別の利用量</td>
+</tr>
+<tr>
+<td>Cache hit rate</td>
+<td>同じ情報を再利用できているか</td>
+</tr>
+<tr>
+<td>Human review rate</td>
+<td>AIの成果物に人間確認がどれだけ必要か</td>
+</tr>
+<tr>
+<td>Business outcome per AI spend</td>
+<td>AI支出がどの成果に結びついたか</td>
+</tr>
+</tbody>
+</table>
+<p>経営陣が見るべきなのは、AI利用量そのものではありません。</p>
+<p><strong>AI支出が、どの業務成果に変換されているかです。</strong></p>
+<h2>まとめ</h2>
+<p>Token Economyは、AI業界の専門用語に見えます。</p>
+<p>しかし本質は、経営の話です。</p>
+<p>AIは、従来のSaaSのような「ほぼ固定費のソフトウェア」ではなく、使われるほど原価が発生する業務インフラになりつつあります。</p>
+<p>その原価をどう測るか。</p>
+<p>誰が変動リスクを持つのか。</p>
+<p>どの単位で顧客に価格を見せるのか。</p>
+<p>どの業務に高価なAIを使い、どの業務は安価なモデルやBatch処理で済ませるのか。</p>
+<p>これらは、CIOやIT部門だけでなく、経営企画、CFO、事業責任者、コンサルティングプロフェッショナルが考えるべきテーマです。</p>
+<p>AIの価格は、これからますます「使った分だけ」に近づきます。</p>
+<p>ただし、顧客が直接tokenを見るとは限りません。</p>
+<p>表ではcredit、conversation、resolution、workflowとして売られ、裏側ではtokenで原価管理される。</p>
+<p>それが、AI時代のToken Economyです。</p>
+<h2>参考リンク</h2>
+<ul>
+<li><a href="https://support.microsoft.com/en-us/office/ai-credits-and-limits-for-microsoft-365-subscriptions-68530f1a-4459-4d02-9818-8233c1f673b8">Microsoft 365 AI credits and limits</a></li>
+<li><a href="https://www.salesforce.com/agentforce/pricing/?bc=OTH">Salesforce Agentforce Pricing</a></li>
+<li><a href="https://www.intercom.com/pricing-new">Intercom Fin pricing</a></li>
+<li><a href="https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/">GitHub Copilot usage-based billing</a></li>
+<li><a href="https://openai.com/api/pricing/">OpenAI API Pricing</a></li>
+<li><a href="https://platform.claude.com/docs/en/about-claude/pricing">Anthropic Claude Pricing</a></li>
+<li><a href="https://ai.google.dev/gemini-api/docs/pricing">Google Gemini API Pricing</a></li>
+<li><a href="https://epoch.ai/data-insights/llm-inference-price-trends">Epoch AI inference price trends</a></li>
+</ul>
+<p>ﾂｩ 2026 Keith Chen. All rights reserved.</p>
+  </main>
+
+  <footer>
+    <p>© 2026 Keith Chen. All rights reserved.</p>
+  </footer>
+</body>
+</html>
