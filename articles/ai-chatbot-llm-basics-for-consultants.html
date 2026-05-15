@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>AIチャットボットは何を覚え、何を忘れるのか | Keith CCC Blog</title>
+
+  <style>
+    :root {
+      --bg: #0f1115;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #4f8cff;
+      --line: rgba(255,255,255,.08);
+      --code-bg: #1a1d24;
+    }
+
+    html { color-scheme: dark; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.85;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      margin: 0 0 0.6em;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin: 2em 0 0.8em;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 1.6em 0 0.6em;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 1em 0;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul, ol {
+      margin: 1em 0;
+      padding-left: 1.5em;
+    }
+
+    li {
+      margin: 0.3em 0;
+    }
+
+    strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    blockquote {
+      margin: 1.5em 0;
+      padding: 0.8em 1.2em;
+      border-left: 3px solid var(--accent);
+      background: var(--code-bg);
+      color: var(--muted);
+    }
+
+    pre {
+      background: var(--code-bg);
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2em;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      color: var(--accent);
+    }
+
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <a href="./index.html" class="back-link">Back to index</a>
+
+    <h1>AIチャットボットは何を覚え、何を忘れるのか</h1>
+
+    <p>ChatGPT、Copilot、Claude、Geminiを使う非エンジニアのためのLLM基礎</p>
+<h2 id="はじめに">はじめに</h2>
+<p>ChatGPT、Microsoft Copilot、Claude、Gemini。</p>
+<p>名前は違っても、利用者から見るとどれも「質問すると自然な文章で返してくれるAIチャットボット」に見えます。</p>
+<p>ただし、実務で使うとすぐに違和感が出ます。</p>
+<p>昨日話したことを覚えているように見える時もあれば、まったく覚えていない時もある。大量の資料を入れたのに、肝心な前提を落とすこともある。丁寧に聞いたつもりでも、期待と違う答えが返ってくることもある。</p>
+<p>これは単なる使い方の問題ではありません。</p>
+<p><strong>AIチャットボットは、人間のように「全部を理解して記憶している」わけではない</strong>からです。</p>
+<p>本稿では、非エンジニアのコンサルタントや経営陣が最低限押さえておくべき、AIチャットボットの基本構造を整理します。</p>
+<h2 id="先に結論">先に結論</h2>
+<p>AIチャットボットの成果を決めるのは、製品名だけではありません。</p>
+<p>重要なのは、次の組み合わせです。</p>
+<ul>
+<li>いま入力された文脈</li>
+<li>保存された情報</li>
+<li>参照できる社内データや過去チャット</li>
+<li>指示の明確さ</li>
+<li>出力後の検証</li>
+</ul>
+<p>つまり、AI活用の本質は</p>
+<p><strong>「良いツールを選ぶこと」ではなく、「AIが判断できる状態に仕事を設計すること」</strong></p>
+<p>にあります。</p>
+<p>AIチャットボットは、魔法の相談相手ではありません。</p>
+<p>より正確には、<strong>与えられた文脈をもとに、次に来るべき出力を組み立てるシステム</strong>です。</p>
+<p>だからこそ、文脈の渡し方、情報の整理、プロンプトの設計、検証の仕組みが重要になります。</p>
+<h2 id="aiチャットボットの共通構造">AIチャットボットの共通構造</h2>
+<p>多くのAIチャットボットの中核には、LLM、つまり大規模言語モデルがあります。</p>
+<p>LLMは、人間のように文章を「読んで理解している」と表現されることがあります。しかし、実務上は次のように捉えるほうが安全です。</p>
+<p><strong>LLMは、入力されたテキストの流れから、次に来る可能性が高い出力を組み立てるモデルです。</strong></p>
+<p>その裏側では、文章はそのまま処理されるのではなく、トークンという単位に分解されます。トークンは、単語、単語の一部、記号、空白などを含む、AIが処理するための単位です。</p>
+<p>そして現代のLLMの多くは、Transformerという構造を土台にしています。Transformerの重要な考え方は、文章の中で「どの情報に注目すべきか」を計算することです。</p>
+<p>たとえば、</p>
+<blockquote>
+<p>佐藤さんは提案書をレビューした。彼はリスクを3つ指摘した。</p>
+</blockquote>
+<p>という文章があった時、「彼」が誰を指すのかは、前後の文脈を見なければ判断できません。</p>
+<p>この「前後の情報を見て、関係の強い部分に注目する」仕組みが、AIチャットボットの自然な文章生成を支えています。</p>
+<p>ただし、ここで重要なのは、LLMが常に正しい理解をしているわけではないことです。</p>
+<p><strong>LLMは強力な文章生成エンジンですが、事実確認エンジンそのものではありません。</strong></p>
+<h2
+id="チャットは会話ではなく文脈つきの入力である">チャットは「会話」ではなく「文脈つきの入力」である</h2>
+<p>AIチャットボットは、人間と会話しているように見えます。</p>
+<p>しかし裏側では、多くの場合、次のような情報がまとめてモデルに渡されています。</p>
+<ul>
+<li>システム側のルール</li>
+<li>ユーザーの入力</li>
+<li>これまでの会話</li>
+<li>添付資料や検索結果</li>
+<li>出力形式の指定</li>
+</ul>
+<p>つまり、チャットとは</p>
+<p><strong>過去のやりとりを含んだ「文脈つきの入力」</strong></p>
+<p>です。</p>
+<p>ここを誤解すると、「さっき言ったのに、なぜ忘れるのか」という不満が起きます。</p>
+<p>AIチャットボットは、会話履歴を常に無限に持っているわけではありません。現在の会話であっても、長くなりすぎれば要約されたり、古い情報が参照されにくくなったりします。</p>
+<p>APIの世界では、テキスト生成リクエストは基本的に独立したものとして扱われ、会話状態は過去メッセージを文脈として渡すことで管理されます。</p>
+<p>これは非エンジニアにも重要な理解です。</p>
+<p><strong>AIが覚えているように見えるものの多くは、実際には「いま文脈として渡されているもの」です。</strong></p>
+<h2
+id="なぜ覚えている時と忘れる時があるのか">なぜ覚えている時と忘れる時があるのか</h2>
+<p>AIチャットボットの「記憶」は、ひとつではありません。</p>
+<p>実務では、少なくとも次の4種類に分けて考える必要があります。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>種類</th>
+<th>何を意味するか</th>
+<th>実務上の注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>現在のチャット文脈</td>
+<td>いま開いている会話内で参照される情報</td>
+<td>長くなると重要情報が埋もれる</td>
+</tr>
+<tr>
+<td>保存メモリ</td>
+<td>好み、役割、継続的な前提などとして保存される情報</td>
+<td>巨大な資料や正確なテンプレート保管には向かない</td>
+</tr>
+<tr>
+<td>過去チャット参照</td>
+<td>以前の会話から関連情報を参照する機能</td>
+<td>製品、設定、プラン、地域で挙動が変わる</td>
+</tr>
+<tr>
+<td>業務データ接続</td>
+<td>メール、文書、会議、プロジェクト知識などへの接続</td>
+<td>権限、契約、テナント設定の影響を受ける</td>
+</tr>
+</tbody>
+</table>
+<p>製品ごとに表現は違います。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>製品例</th>
+<th>記憶・文脈に関係する代表機能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ChatGPT</td>
+<td>メモリ、過去チャット参照、Temporary Chat</td>
+</tr>
+<tr>
+<td>Microsoft Copilot</td>
+<td>Microsoft 365文脈、Graphや業務データ、会話履歴、Copilot Memory</td>
+</tr>
+<tr>
+<td>Claude</td>
+<td>Projects、Project knowledge、RAG</td>
+</tr>
+<tr>
+<td>Gemini</td>
+<td>Saved info、past chats、長いコンテキスト</td>
+</tr>
+</tbody>
+</table>
+<p>ここで大切なのは、どの製品が優れているかを単純比較することではありません。</p>
+<p><strong>「このAIは何を参照して答えているのか」を確認することです。</strong></p>
+<p>特に企業利用では、テナント設定、契約プラン、地域、管理者設定によって使える機能が変わります。経営判断や顧客向け提案に使う場合は、「この回答は何を根拠にしているのか」「どのデータにアクセスできる状態なのか」を確認する必要があります。</p>
+<h2
+id="コンテキストは大きければよいわけではない">コンテキストは大きければよいわけではない</h2>
+<p>AIチャットボットを使い始めると、多くの人がこう考えます。</p>
+<blockquote>
+<p>できるだけ多くの資料を入れれば、より正確になるはずだ。</p>
+</blockquote>
+<p>半分は正しいです。</p>
+<p>文脈が少なすぎれば、AIは前提を推測します。推測が増えれば、誤答や一般論が増えます。</p>
+<p>しかし、文脈が多ければ多いほど正確になる、というわけでもありません。</p>
+<p>コンテキストウィンドウとは、モデルが一度に扱える情報量の上限です。入力、出力、一部モデルの推論用トークンまで含めて、この範囲に収める必要があります。</p>
+<p>ここでいうトークンは、文字数そのものではありません。</p>
+<p>OpenAIの説明では、英語の場合はおおよそ1トークンが4文字程度、100トークンが75語程度の目安とされています。日本語は分かち書きがないため単純換算しにくく、文章の内容や記号の使い方によって変わります。</p>
+<p>実務感覚としては、次のように捉えると分かりやすいです。</p>
+<table>
+<thead>
+<tr>
+<th>目安</th>
+<th>読者向けの感覚</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数百トークン</td>
+<td>短いメール、依頼文、簡単な議事メモ</td>
+</tr>
+<tr>
+<td>数千トークン</td>
+<td>数ページ分の資料、短めの議事録、提案書の一部</td>
+</tr>
+<tr>
+<td>数万トークン</td>
+<td>長めのレポート、複数資料、会議録と補足資料のセット</td>
+</tr>
+</tbody>
+</table>
+<p>つまり、コンテキストが大きいモデルなら「長い資料を入れられる」ようにはなります。</p>
+<p>しかし、それは「全部を同じ精度で読んで、重要箇所を必ず拾う」という意味ではありません。</p>
+<p>さらに、長い文脈を入れた時に、モデルがすべての情報を均等に使えるとは限りません。研究では、重要情報が長い入力の中央付近にあると性能が落ちる場合があることも示されています。</p>
+<p>つまり、実務上の教訓は明確です。</p>
+<p><strong>資料を丸ごと入れるより、何を見て、何を判断してほしいのかを整理して渡す。</strong></p>
+<p>長い文脈は武器になります。</p>
+<p>ただし、整理されていない長文はノイズにもなります。</p>
+<p>
+<img src="./ai-chatbot-llm-basics-infographic.svg" alt="AIチャットボットの仕組みと文脈設計" style="max-width:100%;height:auto;">
+</p>
+<h2
+id="プロンプトは質問文ではなく仕事の設計図である">プロンプトは質問文ではなく、仕事の設計図である</h2>
+<p>プロンプトという言葉は、単なる「AIへの質問文」として扱われがちです。</p>
+<p>しかし実務では、プロンプトはもっと重要です。</p>
+<p><strong>プロンプトは、AIに仕事を渡すための設計図です。</strong></p>
+<p>良いプロンプトには、少なくとも次の要素があります。</p>
+<ul>
+<li>役割: どの立場で考えるのか</li>
+<li>目的: 何を達成したいのか</li>
+<li>前提: どの情報を使うのか</li>
+<li>制約: 何をしてはいけないのか</li>
+<li>判断基準: 何を良い答えとするのか</li>
+<li>出力形式: 表、箇条書き、ドラフト、論点整理など</li>
+</ul>
+<p>たとえば、単に</p>
+<blockquote>
+<p>この提案書をレビューして</p>
+</blockquote>
+<p>と頼むより、</p>
+<blockquote>
+<p>あなたは製造業向けDX案件を担当するシニアマネージャーです。添付の提案書を、経営陣向けの説得力、実行可能性、リスク、費用対効果の4観点でレビューしてください。出力は、重大リスク、改善案、経営会議で聞かれそうな質問の3表に分けてください。</p>
+</blockquote>
+<p>と頼むほうが、仕事として成立しやすくなります。</p>
+<p>違いは、AIの能力ではありません。</p>
+<p><strong>仕事の渡し方です。</strong></p>
+<h2 id="markdownが効く理由">Markdownが効く理由</h2>
+<p>AIチャットボットに長めの依頼をする時、Markdownは非常に有効です。</p>
+<p>Markdownは、見出し、箇条書き、表、引用、コードブロックなどを使って、文章を軽く構造化する書き方です。</p>
+<p>人間にも読みやすく、AIにも文脈の区切りを伝えやすい。</p>
+<p>たとえば、次のように書けます。</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## 目的</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>経営会議で使うため、提案書のリスクを洗い出したい。</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## 前提</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>対象企業は国内製造業</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>予算は初年度5,000万円</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>既存システムとの連携が必要</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## 出力形式</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> リスク <span class="pp">|</span> 影響 <span class="pp">|</span> 確認すべき質問 <span class="pp">|</span> 対応案 <span class="pp">|</span></span></code></pre></div>
+<p>このように書くと、AIは「どこが目的で、どこが前提で、どこが出力形式か」を判別しやすくなります。</p>
+<p>Markdownはエンジニアだけのものではありません。</p>
+<p><strong>AIに仕事を正しく渡すための、非エンジニア向けの実務フォーマットでもあります。</strong></p>
+<h2 id="追加で知っておくべき技術要素">追加で知っておくべき技術要素</h2>
+<p>ここまでを押さえた上で、次の言葉も知っておくとAIチャットボットの実務活用を理解しやすくなります。</p>
+<h3 id="rag">RAG</h3>
+<p>Retrieval Augmented Generationの略です。</p>
+<p>モデルにすべてを覚えさせるのではなく、必要な時に社内文書やナレッジベースから関連情報を検索し、その情報を文脈として渡して回答させる考え方です。</p>
+<p>コンサル実務では、過去提案書、業界レポート、議事録、FAQ、社内テンプレートを扱う時に重要になります。</p>
+<h3 id="embeddings">Embeddings</h3>
+<p>文章の意味を数値化し、似た意味の文書を探しやすくする技術です。</p>
+<p>キーワード検索では見つからない「意味として近い資料」を探す時に使われます。</p>
+<h3 id="tool-use-agents">Tool use / Agents</h3>
+<p>AIが文章を返すだけでなく、検索、計算、ファイル操作、外部システム呼び出しなどを行う仕組みです。</p>
+<p>ただし、エージェント化すると便利になる一方で、権限、ログ、失敗時の責任分界が重要になります。</p>
+<h3 id="evaluation">Evaluation</h3>
+<p>AI活用では、使ってみた印象だけでは不十分です。</p>
+<p>同じ入力で安定して良い結果が出るか、重要な失敗パターンは何か、どの程度人間の確認が必要かを評価する必要があります。</p>
+<h3 id="hallucination">Hallucination</h3>
+<p>AIがもっともらしい誤答を出す現象です。</p>
+<p>これは「たまに起きるバグ」ではなく、生成AIを業務で使う上で常に設計に織り込むべきリスクです。</p>
+<h2 id="コンサル実務ではどう使うか">コンサル実務ではどう使うか</h2>
+<p>コンサルティングファームでAIチャットボットを使うなら、単なる作業効率化ツールとして見るだけでは足りません。</p>
+<p>見るべきなのは、<strong>知識労働のどの工程を再設計できるか</strong>です。</p>
+<p>たとえば、市場調査では、AIに「調べて」と投げるのではなく、調査観点、対象市場、比較軸、除外条件を明確にします。</p>
+<p>提案書レビューでは、AIに「良くして」と頼むのではなく、経営陣、現場部門、財務部門、法務部門の視点を分けてレビューさせます。</p>
+<p>議事録要約では、単なる要約ではなく、決定事項、未決事項、担当者、次回確認事項に分けます。</p>
+<p>リスク洗い出しでは、成功シナリオではなく、失敗シナリオ、反対意見、実行上の制約を出させます。</p>
+<p>経営会議準備では、資料作成だけでなく、想定質問、反論、数字の弱点、意思決定に必要な追加情報を整理させます。</p>
+<p>AIチャットボットは、作業者にもなります。</p>
+<p>しかし、より大きな価値は、<strong>思考の壁打ち相手、レビュー担当、論点整理役として使えること</strong>にあります。</p>
+<p>一方で、コンサル実務ではリスクも大きくなります。</p>
+<p>AIが作った文章は、見た目が整っているほど危険です。事実が間違っていても、根拠が弱くても、もっともらしい表現で出てくることがあります。</p>
+<p>特に注意すべきなのは、次のような場面です。</p>
+<ul>
+<li>市場規模、競合情報、法規制、財務数値を扱う時</li>
+<li>クライアント固有情報や機密資料を入力する時</li>
+<li>AIの出力をそのまま顧客向け資料に転用する時</li>
+<li>社内データ接続の権限範囲が曖昧な時</li>
+<li>「誰が最終判断したのか」が残らない時</li>
+</ul>
+<p>AIチャットボットは、論点を広げたり、初稿を作ったり、抜け漏れを探したりするには強力です。</p>
+<p>しかし、<strong>事実確認、機密管理、最終判断、説明責任までAIに渡してはいけません。</strong></p>
+<p>コンサルタントが使うなら、出力をそのまま成果物にするのではなく、根拠確認、ソース確認、数字の再計算、クライアント情報の扱い、レビュー履歴をセットで設計する必要があります。</p>
+<h2 id="今日からできること">今日からできること</h2>
+<p>最初から高度なAI活用を目指す必要はありません。</p>
+<p>まずは、次の4つを徹底するだけで成果は変わります。</p>
+<ol type="1">
+<li>重要情報を冒頭と末尾に置く</li>
+<li>長文資料は丸投げせず、目的・観点・優先順位を添える</li>
+<li>Markdownで目的、前提、制約、出力形式を分ける</li>
+<li>重要判断では、根拠確認と人間のレビューを残す</li>
+</ol>
+<p>AIチャットボットは、良い入力に対して強いツールです。</p>
+<p>逆に、曖昧な依頼、散らかった資料、未定義の判断基準に対しては、もっともらしい一般論を返しがちです。</p>
+<p>だからこそ、これからのコンサルタントに必要なのは、単なるAI操作スキルではありません。</p>
+<p><strong>AIが判断しやすい形に、仕事そのものを構造化する力です。</strong></p>
+<h2 id="まとめ">まとめ</h2>
+<p>ChatGPT、Copilot、Claude、Geminiは、それぞれ機能も接続先も違います。</p>
+<p>しかし、実務で押さえるべき原理は共通しています。</p>
+<ul>
+<li>AIは、いま渡された文脈に強く依存する</li>
+<li>記憶には種類があり、製品や設定で挙動が変わる</li>
+<li>長いコンテキストは有効だが、整理されていなければノイズになる</li>
+<li>プロンプトは質問文ではなく、仕事の設計図である</li>
+<li>Markdownは、AIに構造を伝える実務フォーマットである</li>
+<li>重要業務では、検証と責任分界を設計する必要がある</li>
+</ul>
+<p>AIチャットボットを使いこなすとは、単に便利な質問を覚えることではありません。</p>
+<p><strong>人間の仕事を、AIが扱える構造に変換することです。</strong></p>
+<p>この差が、これからの知識労働の生産性を分けていきます。</p>
+<h2 id="参考情報出典">参考情報・出典</h2>
+<h3 id="公式資料">公式資料</h3>
+<ul>
+<li>OpenAI, <a
+href="https://developers.openai.com/api/docs/guides/conversation-state">Conversation
+state</a></li>
+<li>OpenAI, <a
+href="https://help.openai.com/en/articles/8590148-memory-in-chatgpt-remembering-what-you-chat-about">Memory
+FAQ</a></li>
+<li>OpenAI, <a
+href="https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them">What
+are tokens and how to count them?</a></li>
+<li>OpenAI, <a
+href="https://developers.openai.com/api/docs/guides/prompting">Prompting</a></li>
+<li>Microsoft Support, <a
+href="https://support.microsoft.com/en-us/topic/how-microsoft-365-copilot-chat-history-works-6ea899e3-3bb1-450a-a2ae-220341ac193a">How
+Microsoft 365 Copilot Chat history works</a></li>
+<li>Anthropic Help Center, <a
+href="https://support.anthropic.com/en/articles/9517075-what-are-projects">What
+are projects?</a></li>
+<li>Google Gemini Apps Help, <a
+href="https://support.google.com/gemini/answer/15637730">Save info and
+reference past chats in Gemini Apps</a></li>
+<li>Google AI for Developers, <a
+href="https://ai.google.dev/gemini-api/docs/long-context">Long
+context</a></li>
+<li>Google AI for Developers, <a
+href="https://ai.google.dev/gemini-api/docs/prompting-intro">Prompt
+design strategies</a></li>
+</ul>
+<h3 id="研究技術背景">研究・技術背景</h3>
+<ul>
+<li>Vaswani et al., <a href="https://arxiv.org/abs/1706.03762">Attention
+Is All You Need</a></li>
+<li>Liu et al., <a href="https://arxiv.org/abs/2307.03172">Lost in the
+Middle: How Language Models Use Long Contexts</a></li>
+</ul>
+<h3 id="markdown仕様">Markdown仕様</h3>
+<ul>
+<li>CommonMark, <a href="https://commonmark.org/">A strongly defined,
+highly compatible specification of Markdown</a></li>
+<li>GitHub, <a href="https://github.github.com/gfm/">GitHub Flavored
+Markdown Spec</a></li>
+</ul>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Keith Chen. All rights reserved.</p>
+  </footer>
+</body>
+</html>

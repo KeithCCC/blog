@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="760" viewBox="0 0 1100 760" role="img" aria-labelledby="title desc">
+  <title id="title">AIチャットボットの仕組みと文脈設計</title>
+  <desc id="desc">AIチャットボットが回答する流れ、記憶の種類、良い文脈設計を3つのパネルで示すインフォグラフィック。</desc>
+  <defs>
+    <style>
+      .bg { fill: #0f1115; }
+      .panel { fill: #171b22; stroke: #2d3440; stroke-width: 2; }
+      .panel-alt { fill: #141922; stroke: #354150; stroke-width: 2; }
+      .title { fill: #f3f4f6; font: 700 34px "Noto Sans JP", "Segoe UI", sans-serif; }
+      .subtitle { fill: #aab4c3; font: 400 17px "Noto Sans JP", "Segoe UI", sans-serif; }
+      .h { fill: #ffffff; font: 700 23px "Noto Sans JP", "Segoe UI", sans-serif; }
+      .body { fill: #d8dee9; font: 500 17px "Noto Sans JP", "Segoe UI", sans-serif; }
+      .small { fill: #aab4c3; font: 400 14px "Noto Sans JP", "Segoe UI", sans-serif; }
+      .label { fill: #0f1115; font: 700 15px "Noto Sans JP", "Segoe UI", sans-serif; }
+      .chip-blue { fill: #82aaff; }
+      .chip-green { fill: #8bd5a8; }
+      .chip-yellow { fill: #f2cc8f; }
+      .chip-red { fill: #f28b82; }
+      .line { stroke: #6b7280; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .muted-line { stroke: #3c4655; stroke-width: 2; fill: none; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b7280" />
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1100" height="760" />
+  <text class="title" x="50" y="58">AIチャットボットは、何を材料に答えているのか</text>
+  <text class="subtitle" x="52" y="92">製品名よりも、文脈・記憶・指示・検証の設計が成果を左右する</text>
+
+  <rect class="panel" x="42" y="125" width="1016" height="170" rx="12" />
+  <text class="h" x="74" y="165">1. AIチャットボットが答えるまで</text>
+  <text class="small" x="76" y="190">会話に見えても、裏側では文脈をまとめてLLMに渡している</text>
+
+  <rect class="chip-blue" x="78" y="221" width="145" height="44" rx="22" />
+  <text class="label" x="106" y="249">ユーザー入力</text>
+  <path class="line" d="M 233 243 H 303" />
+  <rect class="chip-green" x="318" y="221" width="145" height="44" rx="22" />
+  <text class="label" x="366" y="249">文脈</text>
+  <path class="line" d="M 473 243 H 543" />
+  <rect class="chip-yellow" x="558" y="221" width="145" height="44" rx="22" />
+  <text class="label" x="608" y="249">LLM</text>
+  <path class="line" d="M 713 243 H 783" />
+  <rect class="chip-red" x="798" y="221" width="145" height="44" rx="22" />
+  <text class="label" x="850" y="249">回答</text>
+
+  <rect class="panel-alt" x="42" y="322" width="485" height="330" rx="12" />
+  <text class="h" x="74" y="362">2. 記憶の種類</text>
+  <text class="small" x="76" y="388">「覚えている」はひとつではない</text>
+
+  <rect x="78" y="418" width="390" height="46" rx="8" fill="#1f2937" stroke="#3c4655" />
+  <text class="body" x="100" y="447">現在のチャット文脈</text>
+  <text class="small" x="295" y="447">いま渡されている情報</text>
+
+  <rect x="78" y="478" width="390" height="46" rx="8" fill="#1f2937" stroke="#3c4655" />
+  <text class="body" x="100" y="507">保存メモリ</text>
+  <text class="small" x="295" y="507">好み・役割・継続前提</text>
+
+  <rect x="78" y="538" width="390" height="46" rx="8" fill="#1f2937" stroke="#3c4655" />
+  <text class="body" x="100" y="567">過去チャット参照</text>
+  <text class="small" x="295" y="567">関連会話の再利用</text>
+
+  <rect x="78" y="598" width="390" height="46" rx="8" fill="#1f2937" stroke="#3c4655" />
+  <text class="body" x="100" y="627">業務データ接続</text>
+  <text class="small" x="295" y="627">メール・文書・会議など</text>
+
+  <rect class="panel-alt" x="573" y="322" width="485" height="330" rx="12" />
+  <text class="h" x="605" y="362">3. 良い文脈設計</text>
+  <text class="small" x="607" y="388">長いだけではなく、判断できる形に整理する</text>
+
+  <path class="muted-line" d="M 618 430 H 1005" />
+  <circle cx="635" cy="430" r="10" fill="#82aaff" />
+  <text class="body" x="662" y="437">目的</text>
+  <text class="small" x="735" y="437">何のために使うのか</text>
+
+  <path class="muted-line" d="M 618 480 H 1005" />
+  <circle cx="635" cy="480" r="10" fill="#8bd5a8" />
+  <text class="body" x="662" y="487">前提</text>
+  <text class="small" x="735" y="487">対象・制約・背景</text>
+
+  <path class="muted-line" d="M 618 530 H 1005" />
+  <circle cx="635" cy="530" r="10" fill="#f2cc8f" />
+  <text class="body" x="662" y="537">資料</text>
+  <text class="small" x="735" y="537">参照すべき情報</text>
+
+  <path class="muted-line" d="M 618 580 H 1005" />
+  <circle cx="635" cy="580" r="10" fill="#f28b82" />
+  <text class="body" x="662" y="587">出力形式</text>
+  <text class="small" x="765" y="587">表・箇条書き・ドラフト</text>
+
+  <path class="muted-line" d="M 618 630 H 1005" />
+  <circle cx="635" cy="630" r="10" fill="#c3e88d" />
+  <text class="body" x="662" y="637">検証観点</text>
+  <text class="small" x="765" y="637">根拠・抜け漏れ・リスク</text>
+
+  <text class="subtitle" x="52" y="710">実務での合言葉: 丸投げではなく、AIが判断できる状態に仕事を構造化する</text>
+</svg>
