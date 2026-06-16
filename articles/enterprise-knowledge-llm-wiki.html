@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>LLM Wikiが社内ナレッジ基盤を変える | Keith CCC Blog</title>
+
+  <style>
+    :root {
+      --bg: #0f1115;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #4f8cff;
+      --line: rgba(255,255,255,.08);
+      --code-bg: #1a1d24;
+    }
+
+    html { color-scheme: dark; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.85;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      margin: 0 0 0.6em;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin: 2em 0 0.8em;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 1.6em 0 0.6em;
+      font-weight: 600;
+    }
+
+    p { margin: 1em 0; }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    ul, ol {
+      margin: 1em 0;
+      padding-left: 1.5em;
+    }
+
+    li { margin: 0.3em 0; }
+
+    strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5em 0;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 0.65em 0.75em;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--code-bg);
+      color: #fff;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    blockquote {
+      margin: 1.5em 0;
+      padding-left: 1em;
+      border-left: 3px solid var(--accent);
+      color: var(--muted);
+    }
+
+    pre {
+      background: var(--code-bg);
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2em;
+      display: inline-block;
+    }
+
+    .back-link:hover { color: var(--accent); }
+
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <a href="./index.html" class="back-link">Back to index</a>
+
+    <h1>LLM Wikiが社内ナレッジ基盤を変える</h1>
+    <h2>RAGの前に、AIが読める社内Wikiを作る</h2>
+    <p>前回の記事では、社内の過去資産をAIで呼び出すには、ファイル検索だけでは足りず、RAGとメタデータ管理が必要だと書きました。</p>
+    <p>では、次に問題になるのは何でしょうか。</p>
+    <p>それは、社内にある情報がそのままではAIに扱いにくい、ということです。</p>
+    <p>提案書、最終報告書、議事録、体制表、見積、契約スコープ、振り返り資料。どれも重要な資産ですが、多くの場合、ファイル名、フォルダ、作成者、日付、版数、表記がばらばらです。</p>
+    <p>この状態でRAGを作っても、AIは「それっぽい資料」を拾うことはできますが、「会社の知識」として安定して使うのは難しくなります。</p>
+    <p>そこで必要になるのが、<strong>LLM Wiki</strong>という考え方です。</p>
+    <h2>LLM Wikiとは何か</h2>
+    <p>LLM Wikiとは、社内資料をAIが読みやすく、人間も確認しやすい形に再整理したナレッジ層です。</p>
+    <p>通常のWikiは、人間が読むためにページを作ります。</p>
+    <p>LLM Wikiは、それに加えて、AIが検索、比較、要約、再利用しやすいように、情報を構造化します。</p>
+    <p>ポイントは、元資料を捨てることではありません。</p>
+    <p>元資料は根拠として残します。その上に、AIと人間が使いやすい要約ページ、案件ページ、顧客ページ、論点ページを作ります。</p>
+    <p>たとえば、1つの過去案件に対して、次のようなページを作ります。</p>
+    <table>
+    <thead>
+    <tr>
+    <th>ページ</th>
+    <th>内容</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>案件ページ</td>
+    <td>顧客、業種、期間、スコープ、成果物、体制、結果</td>
+    </tr>
+    <tr>
+    <td>顧客ページ</td>
+    <td>顧客概要、過去接点、主要テーマ、注意点</td>
+    </tr>
+    <tr>
+    <td>業界論点ページ</td>
+    <td>業界共通課題、提案で使える論点、規制や市場変化</td>
+    </tr>
+    <tr>
+    <td>成果物ページ</td>
+    <td>提案書、報告書、テンプレート、再利用可否</td>
+    </tr>
+    <tr>
+    <td>人・経験ページ</td>
+    <td>誰がどの案件を経験したか、どのテーマに詳しいか</td>
+    </tr>
+    </tbody>
+    </table>
+    <p>これらは、SharePointやConfluenceのような人間向けWikiでもよいですし、ナレッジDBや検索インデックス上に作る形でも構いません。</p>
+    <p>重要なのは、AIが使いやすい単位で知識を切り出すことです。</p>
+    <h2>なぜRAGだけでは足りないのか</h2>
+    <p>RAGは、質問に関連する情報を探し、その情報をAIに渡して回答させる仕組みです。</p>
+    <p>しかし、RAGは魔法ではありません。</p>
+    <p>検索対象が散らかっていれば、回答も散らかります。</p>
+    <p>たとえば、過去案件の資料に次のような問題があるとします。</p>
+    <ul>
+    <li>顧客名の表記が統一されていない</li>
+    <li>案件名が正式名、略称、社内呼称で混在している</li>
+    <li>業種や規模が資料本文に明記されていない</li>
+    <li>スコープが提案書の各所に分散している</li>
+    <li>最終的な成果や失敗要因が振り返り資料にしかない</li>
+    <li>メンバー情報が体制表にしかない</li>
+    <li>機密情報がそのまま残っている</li>
+    </ul>
+    <p>この状態で「似た案件を探して」と聞いても、AIは十分な判断材料を持てません。</p>
+    <p>RAGの前に、資料をAIが使える知識単位へ変換する必要があります。</p>
+    <p>その変換層がLLM Wikiです。</p>
+    <h2>LLM Wikiが解決すること</h2>
+    <p>LLM Wikiは、社内ナレッジ活用の問題をいくつかに分けて解決します。</p>
+    <table>
+    <thead>
+    <tr>
+    <th>問題</th>
+    <th>LLM Wikiでの解決</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>資料が多すぎる</td>
+    <td>案件ページや論点ページに要約する</td>
+    </tr>
+    <tr>
+    <td>表記がばらばら</td>
+    <td>顧客名、業種、スコープを標準化する</td>
+    </tr>
+    <tr>
+    <td>資料に埋もれている</td>
+    <td>重要情報をメタデータとして抽出する</td>
+    </tr>
+    <tr>
+    <td>機密情報が混ざる</td>
+    <td>マスキング済み版や閲覧権限を分ける</td>
+    </tr>
+    <tr>
+    <td>根拠が見えない</td>
+    <td>元資料へのリンクを残す</td>
+    </tr>
+    <tr>
+    <td>再利用しにくい</td>
+    <td>提案論点、成果物、注意点として整理する</td>
+    </tr>
+    <tr>
+    <td>誰が詳しいかわからない</td>
+    <td>経験者や関係メンバーを紐づける</td>
+    </tr>
+    </tbody>
+    </table>
+    <p>つまりLLM Wikiは、単なる要約集ではありません。</p>
+    <p><strong>過去資料を、AIが検索し、人間が確認し、現場が再利用できる社内知識に変える仕組み</strong>です。</p>
+    <h2>LLMでメタデータを作る</h2>
+    <p>LLM Wikiの大きな利点は、メタデータ作成をLLMで支援できることです。</p>
+    <p>人間がすべての過去案件に対して、顧客、業種、期間、スコープ、成果物、体制、論点を手入力するのは現実的ではありません。</p>
+    <p>しかしLLMを使えば、提案書や報告書から下書きを作れます。</p>
+    <p>たとえば、次のような情報を抽出できます。</p>
+    <table>
+    <thead>
+    <tr>
+    <th>メタデータ</th>
+    <th>抽出の考え方</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>顧客名</td>
+    <td>資料内の正式名称、略称を抽出</td>
+    </tr>
+    <tr>
+    <td>業種</td>
+    <td>資料本文や顧客説明から分類</td>
+    </tr>
+    <tr>
+    <td>案件期間</td>
+    <td>日付、フェーズ、スケジュール表から抽出</td>
+    </tr>
+    <tr>
+    <td>スコープ</td>
+    <td>提案範囲、作業範囲、成果物から整理</td>
+    </tr>
+    <tr>
+    <td>成果物</td>
+    <td>提案書、報告書、ロードマップ、業務フローなど</td>
+    </tr>
+    <tr>
+    <td>体制</td>
+    <td>PM、担当者、専門家、顧客側メンバー</td>
+    </tr>
+    <tr>
+    <td>顧客課題</td>
+    <td>背景、課題、目的から要約</td>
+    </tr>
+    <tr>
+    <td>再利用論点</td>
+    <td>次の提案で使える示唆を抽出</td>
+    </tr>
+    <tr>
+    <td>注意点</td>
+    <td>制約、失敗要因、リスクを整理</td>
+    </tr>
+    </tbody>
+    </table>
+    <p>ただし、LLMに完全自動で確定させるべきではありません。</p>
+    <p>実務では、<strong>LLMが下書きを作り、人間が確認して確定する</strong>形が現実的です。</p>
+    <p>特に、顧客名、金額、契約範囲、プロジェクト結果、メンバー名は、誤ると影響が大きい情報です。</p>
+    <p>LLMは入力担当者ではなく、下書き担当者として使うべきです。</p>
+    <h2>LLMでマスキングする</h2>
+    <p>社内ナレッジを広く使うには、機密情報の扱いも避けて通れません。</p>
+    <p>過去案件資料には、顧客名、個人名、単価、契約条件、未公開情報、顧客固有の事情が含まれます。</p>
+    <p>このまま全社検索にかけるのは危険です。</p>
+    <p>LLM Wikiでは、元資料とは別に、マスキング済みの知識ページを作る考え方が有効です。</p>
+    <p>たとえば、次のように置き換えます。</p>
+    <table>
+    <thead>
+    <tr>
+    <th>元の情報</th>
+    <th>Wiki上の表現</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>株式会社ABC</td>
+    <td>国内大手製造業A社</td>
+    </tr>
+    <tr>
+    <td>山田太郎</td>
+    <td>担当PM</td>
+    </tr>
+    <tr>
+    <td>単価120万円</td>
+    <td>単価情報は非公開</td>
+    </tr>
+    <tr>
+    <td>ERP刷新の失敗</td>
+    <td>基幹システム刷新における移行リスク</td>
+    </tr>
+    <tr>
+    <td>特定工場名</td>
+    <td>国内主要拠点</td>
+    </tr>
+    </tbody>
+    </table>
+    <p>ここでも、LLMは候補抽出に向いています。</p>
+    <p>ただし、マスキングも完全自動にはしないほうがよいです。</p>
+    <p>メールアドレス、電話番号、ID、住所のようなものはルール処理が向いています。顧客固有事情や再識別リスクは、LLMと人間レビューを組み合わせる必要があります。</p>
+    <h2>LLM Wikiの基本構造</h2>
+    <p>LLM Wikiは、ページを作れば終わりではありません。</p>
+    <p>使える知識基盤にするには、最低限次の構造が必要です。</p>
+    <table>
+    <thead>
+    <tr>
+    <th>要素</th>
+    <th>役割</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>元資料</td>
+    <td>提案書、報告書、議事録、体制表などの根拠</td>
+    </tr>
+    <tr>
+    <td>Wikiページ</td>
+    <td>AIと人間が読みやすい要約・整理ページ</td>
+    </tr>
+    <tr>
+    <td>メタデータ</td>
+    <td>顧客、業種、規模、期間、スコープ、成果物など</td>
+    </tr>
+    <tr>
+    <td>権限</td>
+    <td>誰がどの情報を見てよいか</td>
+    </tr>
+    <tr>
+    <td>マスキング</td>
+    <td>機密情報を用途に応じて伏せる</td>
+    </tr>
+    <tr>
+    <td>根拠リンク</td>
+    <td>Wikiページから元資料へ戻れる導線</td>
+    </tr>
+    <tr>
+    <td>レビュー状態</td>
+    <td>LLM生成、確認済み、公開可、要修正など</td>
+    </tr>
+    <tr>
+    <td>更新日</td>
+    <td>情報の鮮度を判断するための項目</td>
+    </tr>
+    </tbody>
+    </table>
+    <p>この構造があると、RAGはただの全文検索ではなくなります。</p>
+    <p>「製造業」「3か月以内」「構想策定」「AI活用」「再利用可能な成果物あり」といった条件で絞り込み、そのうえでAIに回答させることができます。</p>
+    <h2>どのような質問に強くなるか</h2>
+    <p>LLM Wikiがあると、ユーザーは次のような聞き方ができます。</p>
+    <blockquote>
+    <p>金融業向けのAI活用案件で、初期構想フェーズだけを対象にした事例を探して。顧客名は伏せて、提案に使える論点と注意点を整理して。</p>
+    </blockquote>
+    <p>この質問には、検索、権限、マスキング、要約がすべて含まれています。</p>
+    <p>通常のファイル検索だけでは難しいですが、LLM Wikiがあれば処理しやすくなります。</p>
+    <p>AIはまず、メタデータで対象案件を絞ります。</p>
+    <p>次に、関連するWikiページを読みます。</p>
+    <p>そのうえで、必要なら元資料への根拠リンクを示します。</p>
+    <p>最後に、顧客名を伏せた形で、提案に使える論点を整理します。</p>
+    <p>これが、社内ナレッジ活用として目指したい体験です。</p>
+    <h2>作り方は小さく始める</h2>
+    <p>LLM Wikiは、最初から全社規模で作る必要はありません。</p>
+    <p>むしろ、最初は小さく始めるべきです。</p>
+    <p>おすすめは、次の順番です。</p>
+    <ol>
+    <li>対象テーマを1つ選ぶ</li>
+    <li>過去案件を20件程度集める</li>
+    <li>各案件の元資料を整理する</li>
+    <li>LLMで案件ページの下書きを作る</li>
+    <li>メタデータを抽出する</li>
+    <li>機密情報のマスキング候補を作る</li>
+    <li>シニアメンバーがレビューする</li>
+    <li>RAGで検索・回答できるようにする</li>
+    <li>実際の提案活動で使う</li>
+    </ol>
+    <p>この小さな単位で検証すると、どのメタデータが本当に必要か、どの資料が役に立つか、どこで人間レビューが必要かが見えてきます。</p>
+    <h2>管理職・経営層が見るべきポイント</h2>
+    <p>LLM Wikiは、単なるAIツール導入ではありません。</p>
+    <p>会社の過去資産を、再利用できる形に変える取り組みです。</p>
+    <p>管理職や経営層が見るべきポイントは、技術選定だけではありません。</p>
+    <ul>
+    <li>どの知識を会社の資産として残すのか</li>
+    <li>誰が知識の品質に責任を持つのか</li>
+    <li>どの情報は全社共有し、どの情報は制限するのか</li>
+    <li>顧客名や機密情報をどうマスキングするのか</li>
+    <li>LLM生成の下書きを誰が承認するのか</li>
+    <li>現場がナレッジ登録を続けられる運用にできるか</li>
+    <li>提案活動やデリバリー品質にどのように効かせるのか</li>
+    </ul>
+    <p>特に重要なのは、LLM Wikiを「資料置き場」にしないことです。</p>
+    <p>資料を集めるだけでは、過去資産は使える知識になりません。</p>
+    <p>案件、顧客、業界、成果物、人、論点をつなげて初めて、AIが実務で使える知識として呼び出せるようになります。</p>
+    <h2>まとめ</h2>
+    <p>RAGは、社内の過去資産を呼び出すための重要な仕組みです。</p>
+    <p>しかし、RAGの品質は、検索対象となる知識の品質に大きく左右されます。</p>
+    <p>散らかった資料をそのまま検索させても、安定した回答は得られません。</p>
+    <p>LLM Wikiは、過去資料をAIが扱いやすい知識単位に変換するための中間層です。</p>
+    <p>LLMでメタデータを下書きし、マスキング候補を作り、人間が確認し、元資料への根拠リンクを残す。</p>
+    <p>この流れを作ることで、社内の過去資産は「探せないファイル」から「呼び出せる知識」に変わります。</p>
+    <p>RAGを成功させるには、まずAIに読ませる社内知識を整える必要があります。</p>
+    <p>そのための現実的な方法が、LLM Wikiです。</p>
+    <p>© 2026 Keith Chen. All rights reserved.</p>
+
+  </main>
+
+  <footer>
+    &copy; Keith CCC Blog / GitHub Pages
+  </footer>
+</body>
+</html>
