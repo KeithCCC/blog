@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>2026年時点のAIトレンドをビジネス視点で整理する | Keith CCC Blog</title>
+
+  <style>
+    :root {
+      --bg: #0f1115;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #4f8cff;
+      --line: rgba(255,255,255,.08);
+      --code-bg: #1a1d24;
+    }
+
+    html { color-scheme: dark; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.85;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      margin: 0 0 0.6em;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin: 2em 0 0.8em;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 1.6em 0 0.6em;
+      font-weight: 600;
+    }
+
+    p { margin: 1em 0; }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 2em auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #0f1115;
+    }
+
+    ul, ol {
+      margin: 1em 0;
+      padding-left: 1.5em;
+    }
+
+    li { margin: 0.3em 0; }
+
+    strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5em 0;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 0.65em 0.75em;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--code-bg);
+      color: #fff;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    blockquote {
+      margin: 1.5em 0;
+      padding-left: 1em;
+      border-left: 3px solid var(--accent);
+      color: var(--muted);
+    }
+
+    pre {
+      background: var(--code-bg);
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2em;
+      display: inline-block;
+    }
+
+    .back-link:hover { color: var(--accent); }
+
+    footer {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <a href="./index.html" class="back-link">Back to index</a>
+
+    <h1>2026年時点のAIトレンドをビジネス視点で整理する</h1>
+    <p>ここ2年で、AI活用の主戦場は大きく変わりました。</p>
+    <p>2023年から2024年にかけては、話題の中心は「どのLLMが賢いか」でした。GPT-4、Claude、Geminiのようなモデルそのものの性能、コンテキスト長、RAGによる社内文書検索が注目されました。</p>
+    <p>しかし2025年から2026年にかけて、焦点はモデル単体から、AIをどう業務に組み込むかへ移っています。</p>
+    <p><img src="./ai-trends-2026-business-infographic.svg" alt="2023年から2026年のAI技術トレンド年表"></p>
+    <p>いま重要なのは、AIに一回質問して終わることではありません。</p>
+    <p>AIにどの情報を見せるか。どの手順で作業させるか。どこで人間が承認するか。失敗したときにどう止めるか。</p>
+    <p>つまりAI活用は、<strong>チャットの使い方から、業務システムの設計へ移っている</strong>ということです。</p>
+    <h2>年表で見るAI活用の変化</h2>
+    <table>
+    <thead>
+    <tr>
+    <th>時期</th>
+    <th>主役</th>
+    <th>何が変わったか</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>2023年</td>
+    <td>Prompt Engineering / 単発LLM</td>
+    <td>良い質問を書けば、AIが良い回答を返すという使い方が中心</td>
+    </tr>
+    <tr>
+    <td>2024年</td>
+    <td>RAG / ファイル検索</td>
+    <td>社内文書や外部情報を検索して、根拠をもとに回答する使い方が広がった</td>
+    </tr>
+    <tr>
+    <td>2025年</td>
+    <td>Workflow</td>
+    <td>AIを業務手順の中に組み込み、分類、抽出、作成、承認をつなげる使い方が増えた</td>
+    </tr>
+    <tr>
+    <td>2026年</td>
+    <td>Agent / Agent Loop</td>
+    <td>AIが計画、実行、観察、修正を繰り返し、長い作業を進める方向に進んだ</td>
+    </tr>
+    <tr>
+    <td>現在</td>
+    <td>Context Engineering / Harness / HITL</td>
+    <td>AIに何を見せ、どう制御し、どこで人間が止めるかが重要になった</td>
+    </tr>
+    </tbody>
+    </table>
+    <p>この流れを一言でいうと、<strong>AIは「賢い回答者」から「管理された作業者」へ変わっている</strong>ということです。</p>
+    <h2>第1世代: 単発LLM</h2>
+    <p>単発LLMは、もっとも基本的なAIチャットの形です。</p>
+    <pre><code class="language-text">質問
+     ↓
+    LLM
+     ↓
+    回答
+    </code></pre>
+    <p>ChatGPTに質問して、文章で回答をもらう使い方がこれです。</p>
+    <h3>できること</h3>
+    <ul>
+    <li>文章の要約</li>
+    <li>メールや議事録のドラフト</li>
+    <li>アイデア出し</li>
+    <li>翻訳や言い換え</li>
+    <li>簡単な調査観点の整理</li>
+    </ul>
+    <h3>できないこと</h3>
+    <ul>
+    <li>社内の最新情報を勝手に探す</li>
+    <li>長い業務を最後まで安定して進める</li>
+    <li>過去の会話や資料を常に正確に覚える</li>
+    <li>外部システムを操作する</li>
+    </ul>
+    <h3>不得意なこと</h3>
+    <p>単発LLMは、短い作業には強い一方で、長い作業や複数ステップの業務には弱いです。</p>
+    <p>たとえば「この資料を読んで要約して」は得意ですが、「顧客を調べ、競合を比較し、提案書を作り、不足情報を再調査して完成させて」は不安定になります。</p>
+    <h2>第2世代: RAG / ファイル検索</h2>
+    <p>RAGは、検索で見つけた情報をAIに渡して回答させる仕組みです。</p>
+    <pre><code class="language-text">質問
+     ↓
+    検索
+     ↓
+    LLM
+     ↓
+    回答
+    </code></pre>
+    <p>NotebookLM、Copilotの知識検索、社内文書検索型チャットはこの考え方に近いです。</p>
+    <h3>できること</h3>
+    <ul>
+    <li>社内文書をもとに回答する</li>
+    <li>PDFや議事録から該当箇所を探す</li>
+    <li>根拠資料を引用する</li>
+    <li>最新資料を参照して要約する</li>
+    <li>過去資料を横断して類似情報を探す</li>
+    </ul>
+    <h3>できないこと</h3>
+    <ul>
+    <li>資料に書かれていないことを正しく補う</li>
+    <li>散らかった資料を自動で正しい社内知識に変える</li>
+    <li>権限や機密情報の扱いを勝手に判断する</li>
+    <li>業務を実行する</li>
+    </ul>
+    <h3>不得意なこと</h3>
+    <p>RAGは、検索対象の品質に強く依存します。</p>
+    <p>ファイル名、版数、顧客名、案件名、メタデータが乱れていると、AIの回答も不安定になります。RAGは「資料を探して渡す仕組み」であって、ナレッジマネジメントそのものではありません。</p>
+    <h2>第3世代: Workflow</h2>
+    <p>Workflowは、AIを業務手順の中に組み込む考え方です。</p>
+    <pre><code class="language-text">Step1
+     ↓
+    Step2
+     ↓
+    Step3
+     ↓
+    結果
+    </code></pre>
+    <p>たとえば、問い合わせ対応なら次のようになります。</p>
+    <pre><code class="language-text">メール受信
+     ↓
+    分類
+     ↓
+    必要情報取得
+     ↓
+    返信ドラフト
+     ↓
+    承認
+    </code></pre>
+    <h3>できること</h3>
+    <ul>
+    <li>定型業務を安定して処理する</li>
+    <li>作業手順を明確にする</li>
+    <li>テストしやすくする</li>
+    <li>監査しやすくする</li>
+    <li>人間の承認を途中に入れる</li>
+    </ul>
+    <h3>できないこと</h3>
+    <ul>
+    <li>想定外の業務を自由に解決する</li>
+    <li>目的だけを渡して完全自律で進める</li>
+    <li>業務設計なしに成果を出す</li>
+    </ul>
+    <h3>不得意なこと</h3>
+    <p>Workflowは、決まった手順には強いですが、状況に応じて大きくやり方を変える仕事には弱いです。</p>
+    <p>ただし企業利用では、この弱さはむしろ利点でもあります。勝手に判断しすぎないため、業務システムに組み込みやすいからです。</p>
+    <h2>第4世代: Agent</h2>
+    <p>Agentは、目標を与えると、AIが計画を立てて作業を進める考え方です。</p>
+    <pre><code class="language-text">目標
+     ↓
+    計画
+     ↓
+    実行
+     ↓
+    再計画
+     ↓
+    実行
+     ↓
+    終了
+    </code></pre>
+    <p>たとえば「新規顧客を調査して提案のたたき台を作って」と依頼すると、検索、資料作成、不足情報の発見、再検索、資料更新を自律的に行うイメージです。</p>
+    <h3>できること</h3>
+    <ul>
+    <li>複数ステップの作業を進める</li>
+    <li>途中で不足情報を見つける</li>
+    <li>必要に応じてツールを使う</li>
+    <li>調査、整理、作成をまとめて行う</li>
+    </ul>
+    <h3>できないこと</h3>
+    <ul>
+    <li>常に正しい判断をする</li>
+    <li>企業ルールを暗黙に守る</li>
+    <li>コストや時間を自然に最適化する</li>
+    <li>重要な意思決定を任せきる</li>
+    </ul>
+    <h3>不得意なこと</h3>
+    <p>Agentは自由度が高い分、暴走、コスト増、再現性の低さが問題になります。</p>
+    <p>同じ依頼でも毎回違う進め方をすることがあります。企業で使う場合は、どこまで任せるか、どこで止めるかを明確にする必要があります。</p>
+    <h2>第5世代: Agent Loop</h2>
+    <p>Agent Loopは、Agentが一度作業して終わるのではなく、計画、実行、観察、反省、再計画を繰り返す考え方です。</p>
+    <pre><code class="language-text">Plan
+     ↓
+    Act
+     ↓
+    Observe
+     ↓
+    Reflect
+     ↓
+    Plan
+    </code></pre>
+    <p>コード生成ツールでよく見られる動きです。</p>
+    <pre><code class="language-text">コード生成
+     ↓
+    テスト
+     ↓
+    失敗
+     ↓
+    原因分析
+     ↓
+    再生成
+     ↓
+    テスト
+     ↓
+    成功
+    </code></pre>
+    <h3>できること</h3>
+    <ul>
+    <li>失敗を見て修正する</li>
+    <li>テスト結果をもとに改善する</li>
+    <li>長い作業を少しずつ進める</li>
+    <li>人間に近い試行錯誤を行う</li>
+    </ul>
+    <h3>できないこと</h3>
+    <ul>
+    <li>無限に安く回る</li>
+    <li>失敗の原因を常に正しく見抜く</li>
+    <li>悪い方向へのループを自動で止める</li>
+    <li>企業リスクを自分で判断する</li>
+    </ul>
+    <h3>不得意なこと</h3>
+    <p>Agent Loopは強力ですが、ループが長くなるほどコスト、時間、リスクが増えます。</p>
+    <p>「何回まで試すか」「どの失敗なら止めるか」「人間に確認する条件は何か」を設計しないと、便利さより危険の方が大きくなります。</p>
+    <h2>第6世代: Multi-Agent</h2>
+    <p>Multi-Agentは、複数のAIに役割を分ける考え方です。</p>
+    <pre><code class="language-text">Manager Agent
+
+    ├─ Research Agent
+    ├─ Writing Agent
+    ├─ QA Agent
+    └─ Review Agent
+    </code></pre>
+    <p>人間のチームに近い形で、調査担当、作成担当、確認担当を分けます。</p>
+    <h3>できること</h3>
+    <ul>
+    <li>作業を分担する</li>
+    <li>並列に進める</li>
+    <li>レビュー役を置く</li>
+    <li>複数観点で品質を上げる</li>
+    </ul>
+    <h3>できないこと</h3>
+    <ul>
+    <li>自動的にチームがうまく連携する</li>
+    <li>責任の所在を明確にする</li>
+    <li>コストを低く抑える</li>
+    <li>矛盾した判断を必ず解消する</li>
+    </ul>
+    <h3>不得意なこと</h3>
+    <p>Multi-Agentは見た目には高度ですが、実務ではオーケストレーションが難しいです。</p>
+    <p>誰が最終判断をするのか、どのAgentの回答を採用するのか、エラー時にどう戻すのかを設計しないと、複雑なだけの仕組みになります。</p>
+    <h2>第7世代: Agent + Tool</h2>
+    <p>現在のAI活用で重要なのは、LLMそのものよりも、AIがどのツールを使えるかです。</p>
+    <pre><code class="language-text">Agent
+
+    ├─ Web検索
+    ├─ DB
+    ├─ ERP
+    ├─ GitHub
+    ├─ Email
+    └─ Teams
+    </code></pre>
+    <p>AIがメール、DB、ERP、チケット管理、ファイル共有、カレンダーなどを操作できるようになると、単なる回答ではなく、業務実行に近づきます。</p>
+    <h3>できること</h3>
+    <ul>
+    <li>必要な情報を取りに行く</li>
+    <li>社内システムを参照する</li>
+    <li>ドラフトやチケットを作る</li>
+    <li>作業結果を別システムへ反映する</li>
+    <li>人間の作業を大きく減らす</li>
+    </ul>
+    <h3>できないこと</h3>
+    <ul>
+    <li>権限設計なしに安全に操作する</li>
+    <li>誤操作の責任を取る</li>
+    <li>すべてのツールの仕様変更に自動対応する</li>
+    <li>業務ルールを勝手に理解する</li>
+    </ul>
+    <h3>不得意なこと</h3>
+    <p>Agent + Toolは、便利さとリスクが同時に増えます。</p>
+    <p>メールを読むだけならリスクは低いですが、ERPを更新する、顧客へ送信する、契約情報を書き換えるとなると、承認、ログ、ロールバックが必須です。</p>
+    <h2>第8世代: Agent + Harness</h2>
+    <p>Harnessは、AIを安全に動かすための枠組みです。</p>
+    <pre><code class="language-text">Agent
+     ↓
+    Guardrail
+     ↓
+    Validator
+     ↓
+    Retry
+     ↓
+    HITL
+     ↓
+    Commit
+    </code></pre>
+    <p>考え方はシンプルです。</p>
+    <p>AIをもっと賢くするだけではなく、<strong>AIが失敗しても壊れない仕組みを作る</strong>ということです。</p>
+    <h3>できること</h3>
+    <ul>
+    <li>禁止行為を止める</li>
+    <li>出力を検証する</li>
+    <li>失敗時にやり直す</li>
+    <li>人間承認を入れる</li>
+    <li>実行ログを残す</li>
+    <li>本番反映前にチェックする</li>
+    </ul>
+    <h3>できないこと</h3>
+    <ul>
+    <li>すべての失敗を完全に防ぐ</li>
+    <li>曖昧な業務判断を自動で正解にする</li>
+    <li>設計なしに安全性を保証する</li>
+    </ul>
+    <h3>不得意なこと</h3>
+    <p>Harnessは、AI活用を少し重くします。</p>
+    <p>承認や検証を入れるため、スピードは落ちます。しかし企業ITでは、この重さが重要です。速いが危ないAIより、少し遅くても壊れないAIの方が導入しやすいからです。</p>
+    <h2>第9世代: Context Engineering</h2>
+    <p>Prompt Engineeringは、AIにどう指示を書くかの技術でした。</p>
+    <p>Context Engineeringは、AIに何を見せるかの設計です。</p>
+    <pre><code class="language-text">ユーザ情報
+    +
+    過去会話
+    +
+    関連文書
+    +
+    実行履歴
+    +
+    組織ルール
+    </code></pre>
+    <p>これらを組み立ててからLLMに渡します。</p>
+    <h3>できること</h3>
+    <ul>
+    <li>必要な情報だけをAIに渡す</li>
+    <li>過去の作業履歴を活用する</li>
+    <li>社内ルールを反映する</li>
+    <li>ユーザーや業務ごとに回答を変える</li>
+    <li>長い作業の文脈を維持する</li>
+    </ul>
+    <h3>できないこと</h3>
+    <ul>
+    <li>無限の情報を全部渡す</li>
+    <li>間違った文脈を自動で正す</li>
+    <li>古い情報と新しい情報を必ず見分ける</li>
+    <li>機密情報の扱いを勝手に最適化する</li>
+    </ul>
+    <h3>不得意なこと</h3>
+    <p>Context Engineeringは、情報の選び方を間違えると逆効果です。</p>
+    <p>関係ない情報を渡しすぎると、AIは迷います。必要な情報が抜けると、AIは推測します。つまり、AIの品質はモデルだけでなく、渡す文脈の品質で決まります。</p>
+    <h2>企業で見るべき結論</h2>
+    <p>企業ITでは、完全自律Agentをいきなり本番業務に入れるより、<strong>Workflow + HITL</strong>の方が現実的です。</p>
+    <p>たとえばD365のような業務システムを更新するなら、次のような形が安全です。</p>
+    <pre><code class="language-text">申請
+     ↓
+    Agent
+     ↓
+    差分作成
+     ↓
+    承認
+     ↓
+    本番反映
+    </code></pre>
+    <p>AIに作業させる。ただし、最後は人間が承認する。</p>
+    <p>この形なら、スピードと安全性のバランスを取りやすくなります。</p>
+    <h2>小規模事業や個人では違う</h2>
+    <p>一方で、小規模事業や個人起業では、より自律的なAgentが効きます。</p>
+    <pre><code class="language-text">Agent
+     ↓
+    Loop
+     ↓
+    Tool
+     ↓
+    自動実行
+    </code></pre>
+    <p>理由は、失敗コストが比較的低く、人手が足りず、スピードが最優先になりやすいからです。</p>
+    <p>同じAI技術でも、大企業と小規模事業では最適解が違います。</p>
+    <h2>まとめ</h2>
+    <p>2023年は、良いプロンプトを書く時代でした。</p>
+    <p>2024年は、RAGで資料を検索して答える時代でした。</p>
+    <p>2025年は、Workflowで業務にAIを組み込む時代になりました。</p>
+    <p>2026年は、Agent、Loop、Tool、Harness、HITL、Context Engineeringを組み合わせる時代です。</p>
+    <p>そしてこれからの競争軸は、<strong>どのモデルが一番賢いか</strong>だけではありません。</p>
+    <p>より重要なのは、<strong>どれだけ長時間、低コスト、安全にAIのループを回せるか</strong>です。</p>
+    <p>AI活用は、個人の便利ツールから、業務設計、システム設計、ガバナンス設計の領域へ移っています。</p>
+
+  </main>
+
+  <footer>
+    &copy; Keith CCC Blog / GitHub Pages
+  </footer>
+</body>
+</html>
